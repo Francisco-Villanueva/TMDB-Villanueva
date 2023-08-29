@@ -39,13 +39,16 @@ export default function Home() {
               showInfo={handleOpen}
               handlePause={handlePause}
             />
-            <ModalInfo
-              open={open}
-              handleClose={handleClose}
-              handlePause={handlePause}
-              id={id}
-              // videoKey={447365}
-            />
+            {open ? (
+              <ModalInfo
+                open={open}
+                handleClose={handleClose}
+                handlePause={handlePause}
+                id={id}
+              />
+            ) : (
+              ""
+            )}
           </div>
         </div>
       </div>

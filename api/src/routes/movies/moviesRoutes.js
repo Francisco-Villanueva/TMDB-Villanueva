@@ -7,6 +7,8 @@ const {
   getUpcoming,
   getVideoKey,
   searchMovie,
+  getDetails,
+  getSimilar,
 } = require("./services");
 
 router.get("/nowPlaying", getNowPlaying);
@@ -15,5 +17,7 @@ router.get("/topRated", getTopRated);
 router.get("/upcoming", getUpcoming);
 router.get("/videos/:movie_id", getVideoKey);
 router.get("/search", searchMovie);
+router.get("/deatails/:movie_id", getDetails);
+router.get("/similar/:movie_id", getSimilar);
 
 module.exports = router;

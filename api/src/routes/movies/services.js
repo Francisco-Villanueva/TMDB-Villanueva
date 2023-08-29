@@ -70,7 +70,33 @@ const searchMovie = async (req, res) => {
 
     res.status(200).json(response.data);
   } catch (error) {
-    console.log(error);
+    res.status(404).json({ error });
+  }
+};
+
+const getDetails = async (req, res) => {
+  try {
+    const { movie_id } = req.params;
+
+    const response = await axios.get(
+      `https://api.themoviedb.org/3/movie/${movie_id}?api_key=${API_KEY}`
+    );
+
+    res.status(200).json(response.data);
+  } catch (error) {
+    res.status(404).json({ error });
+  }
+};
+
+const getSimilar = async (req, res) => {
+  try {
+    const { movie_id } = req.params;
+
+    const response = await axios.get(`
+    https://api.themoviedb.org/3/movie/${movie_id}/similar?api_key=${API_KEY}`);
+
+    res.status(200).json(response.data);
+  } catch (error) {
     res.status(404).json({ error });
   }
 };
@@ -81,6 +107,8 @@ module.exports = {
   getUpcoming,
   getVideoKey,
   searchMovie,
+  getDetails,
+  getSimilar,
 };
 
 // curl --request GET \

@@ -8,21 +8,29 @@ import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import NavigationIcon from "@mui/icons-material/Navigation";
 import InfoIcon from "@mui/icons-material/Info";
 
-export default function MoreInfo({ size, font, showInfo, handlePause }) {
+export default function MoreInfo({
+  size,
+  font,
+  showInfo,
+  handlePause,
+  onlyFav = false,
+}) {
   const handleClick = () => {
     showInfo();
     if (handlePause) handlePause();
   };
   return (
     <Box sx={{ "& > :not(style)": { m: 0.5, border: "none", p: ".5em 0" } }}>
-      <Fab
-        onClick={handleClick}
-        color="primary"
-        aria-label="add"
-        sx={{ width: size, height: size, minHeight: "1px", p: 2 }}
-      >
-        <InfoOutlinedIcon sx={{ fontSize: font || 20 }} />
-      </Fab>
+      {!onlyFav && (
+        <Fab
+          onClick={handleClick}
+          color="primary"
+          aria-label="add"
+          sx={{ width: size, height: size, minHeight: "1px", p: 2 }}
+        >
+          <InfoOutlinedIcon sx={{ fontSize: font || 20 }} />
+        </Fab>
+      )}
       <Fab
         aria-label="like"
         color="info"

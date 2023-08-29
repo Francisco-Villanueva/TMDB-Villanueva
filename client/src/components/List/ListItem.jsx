@@ -5,7 +5,7 @@ import ModalInfo from "../../commons/ModalInfo";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchVideo } from "../../redux/states/moviesSlice";
 
-export default function ListItem({ movie }) {
+export default function ListItem({ movie, onlyFav }) {
   const { backdrop_path, title, poster_path, id } = movie;
   const { open, handleClose, handleOpen } = useModal();
 
@@ -19,8 +19,12 @@ export default function ListItem({ movie }) {
 
       <div className="list_item_info">
         {/* <b>{title}</b> */}
-        <MoreInfo size={30} font={20} showInfo={handleOpen} />
-        <ModalInfo open={open} handleClose={handleClose} id={id} />
+        <MoreInfo size={30} font={20} showInfo={handleOpen} onlyFav={onlyFav} />
+        {open ? (
+          <ModalInfo open={open} handleClose={handleClose} id={id} />
+        ) : (
+          ""
+        )}
       </div>
     </div>
   );

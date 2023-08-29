@@ -4,12 +4,12 @@ export default function VideoPlayer({ videoId }) {
   return (
     <div
       className="videoPlayer_container"
-      style={{ width: "90vw", background: "#000", height: "100%" }}
+      style={{ width: "100%", background: "#000", height: "100%" }}
     >
       <ReactPlayer
         url={`https://www.youtube.com/watch?v=${videoId}`}
         playing={true}
-        controls={true}
+        // controls={true}
         config={{
           youtube: {
             playerVars: {
@@ -18,7 +18,7 @@ export default function VideoPlayer({ videoId }) {
           },
         }}
         width={"100%"}
-        height={"100%"}
+        height={"50vh"}
       />
     </div>
   );

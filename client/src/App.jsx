@@ -47,7 +47,6 @@ function App() {
     <div className="app">
       <Routes>
         <Route path="/" element={<Login />} />
-        <Route path="/player" element={<VideoPlayer />} />
 
         <Route
           path="/home"
@@ -56,12 +55,11 @@ function App() {
               <Navbar />
               <Home />
               <Home_List />
+              <Footer />
             </>
           }
         />
       </Routes>
-
-      <Footer />
     </div>
   );
 }
