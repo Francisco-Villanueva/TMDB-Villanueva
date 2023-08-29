@@ -1,0 +1,44 @@
+.List_main {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin: 20px 0;
+}
+.list_container {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin: 10px auto;
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+.list_item {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  color: #fff;
+}
+.list_item_info {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  z-index: 3;
+}
+.list_item_info b {
+  text-align: start;
+  text-shadow: 1px 1px 2px #000;
+}
+.listItem_img {
+  position: relative;
+
+  transition: all 0.3s;
+}
+.listItem_img:hover {
+  transform: scale(1.02);
+  z-index: 3;
+}
