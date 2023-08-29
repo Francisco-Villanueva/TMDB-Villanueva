@@ -22,6 +22,8 @@ import Home_List from "./components/List/Home_List";
 import Login from "./components/Login/Login";
 import Footer from "./components/Footer/Footer";
 import VideoPlayer from "./components/VideoPlayer/VideoPlayer";
+import Register from "./components/Login/Register";
+import Landing from "./components/Login/Landing";
 
 function App() {
   const dispatch = useDispatch();
@@ -46,7 +48,8 @@ function App() {
   return (
     <div className="app">
       <Routes>
-        <Route path="/" element={<Login />} />
+        <Route path="/login" element={<Landing />} />
+        <Route path="/register" element={<Landing />} />
 
         <Route
           path="/home"

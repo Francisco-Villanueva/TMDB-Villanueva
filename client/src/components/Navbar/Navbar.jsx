@@ -5,8 +5,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import Search from "./Search/Search";
 export default function Navbar() {
+  const userLoged = localStorage.getItem("userLogged");
+
   const user = {
-    name: "Pancho",
+    name: userLoged,
     color: "#fff",
   };
   // Función para cambiar el estilo del navbar al hacer scroll

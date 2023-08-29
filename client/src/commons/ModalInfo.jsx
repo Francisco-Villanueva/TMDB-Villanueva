@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Box } from "@mui/material";
+import { Box, backdropClasses } from "@mui/material";
 import Modal from "@mui/material/Modal";
 import VideoPlayer from "../components/VideoPlayer/VideoPlayer";
 import { useDispatch, useSelector } from "react-redux";
@@ -65,7 +65,15 @@ export default function ModalInfo({ open, handleClose, handlePause, id }) {
 
   return (
     <div>
-      <Modal open={open} onClose={handleClose} style={{ color: "#000" }}>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        style={{
+          color: "#000",
+          backdropFilter: "blur(10px)",
+          transition: "all .3s",
+        }}
+      >
         <div className="modal_main_conainter">
           <button onClick={closeHandle} className="modal_closetBtn">
             x

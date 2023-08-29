@@ -20,9 +20,9 @@ User.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    lastname: {
+    color: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     email: {
       type: DataTypes.STRING,

@@ -14,16 +14,6 @@ export default function Home() {
     movies_topRated.results ? movies_topRated.results[randomIndex] : "";
   const { open, handleClose, handleOpen } = useModal();
 
-  // useEffect(() => {
-  //   dispatch(fetchVideo(id));
-  // }, [id]);
-
-  // const videoToShow = movie_video
-  //   ? movie_video.results
-  //     ? movie_video.results.filter((e) => e.type === "Trailer")
-  //     : [{ key: "" }]
-  //   : [{ key: "" }];
-
   return (
     <section className="home_section">
       <div className="top_movie fade-in-fwd ">

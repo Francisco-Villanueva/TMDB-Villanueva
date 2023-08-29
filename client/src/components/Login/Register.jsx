@@ -5,10 +5,13 @@ import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
+import Link from "@mui/material/Link";
+import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 import {
   Link as LinkRouter,
   Route,
@@ -18,28 +21,24 @@ import {
 import axios from "axios";
 import { message } from "antd";
 
-export default function Login() {
+export default function Register() {
   const [userData, setUserData] = useState({
     email: "",
+    name: "",
     password: "",
   });
   const navigateTo = useNavigate();
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    axios
-      .post("http://localhost:4000/user/login", userData)
-      .then((user) => {
-        message.success(`Welcome back ${user.data.name} !`);
-        localStorage.setItem("userLogged", user.data.name);
-        setTimeout(() => navigateTo("/home"), 1000);
-      })
-      .catch(() => {
-        message.error("Invalid login credentials. Please try again.");
-      });
+    axios.post("http://localhost:4000/user/register", userData).then(() => {
+      message.success("Registered succesfully !");
+      setTimeout(() => navigateTo("/login"), 1000);
+    });
 
     setUserData({
       email: "",
+      name: "",
       password: "",
     });
   };
@@ -64,11 +63,21 @@ export default function Login() {
         <LockOutlinedIcon />
       </Avatar>
       <Typography component="h1" variant="h4">
-        Sign in
+        Sign Up
       </Typography>
       <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
         <TextField
-          margin="normal"
+          margin="dense"
+          fullWidth
+          id="username"
+          label="Username"
+          name="name"
+          autoFocus
+          onChange={handleInputChange}
+          value={userData.name}
+        />
+        <TextField
+          margin="dense"
           fullWidth
           id="email"
           label="Email Address"
@@ -76,9 +85,10 @@ export default function Login() {
           autoComplete="email"
           autoFocus
           onChange={handleInputChange}
+          value={userData.email}
         />
         <TextField
-          margin="normal"
+          margin="dense"
           required
           fullWidth
           name="password"
@@ -87,10 +97,7 @@ export default function Login() {
           id="password"
           autoComplete="current-password"
           onChange={handleInputChange}
-        />
-        <FormControlLabel
-          control={<Checkbox value="remember" color="primary" />}
-          label="Remember me"
+          value={userData.password}
         />
         <Button
           type="submit"
@@ -98,15 +105,15 @@ export default function Login() {
           variant="contained"
           sx={{ mt: 3, mb: 2 }}
         >
-          Sign In
+          Sign up
         </Button>
-        <Grid container>
+        {/* <Grid container>
           <Grid item xs>
-            <LinkRouter to={"/register"}>
+            <LinkRouter to={"/login"}>
               {"Don't have an account? Sign Up"}
             </LinkRouter>
           </Grid>
-        </Grid>
+        </Grid> */}
       </Box>
     </Box>
   );

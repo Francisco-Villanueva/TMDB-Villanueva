@@ -40,7 +40,6 @@ const login = async (req, res) => {
       const payload = {
         email: userToCheck.email,
         name: userToCheck.name,
-        lastname: userToCheck.lastname,
       };
 
       const token = generateToken(payload);
@@ -49,7 +48,7 @@ const login = async (req, res) => {
 
       res.cookie("token", token);
 
-      res.send(payload);
+      res.json(payload);
     }
   } catch (error) {
     console.log({ error });
@@ -73,10 +72,21 @@ const logOut = (req, res) => {
 const me = (req, res) => {
   res.send(req.user);
 };
+
+const getAllUsers = async (req, res) => {
+  try {
+    const users = await User.findAll();
+
+    res.status(200).json(users);
+  } catch (error) {
+    res.status(401).send(error);
+  }
+};
 module.exports = {
   register,
   login,
   secret,
   logOut,
   me,
+  getAllUsers,
 };

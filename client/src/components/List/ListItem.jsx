@@ -19,7 +19,13 @@ export default function ListItem({ movie, onlyFav }) {
 
       <div className="list_item_info">
         {/* <b>{title}</b> */}
-        <MoreInfo size={30} font={20} showInfo={handleOpen} onlyFav={onlyFav} />
+        <MoreInfo
+          size={30}
+          font={20}
+          showInfo={handleOpen}
+          onlyFav={onlyFav}
+          title={title}
+        />
         {open ? (
           <ModalInfo open={open} handleClose={handleClose} id={id} />
         ) : (

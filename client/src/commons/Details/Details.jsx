@@ -1,11 +1,15 @@
 import React from "react";
 import MoreInfo from "../MoreInfo";
-import { Divider } from "@mui/material";
+import { Box, Chip } from "@mui/material";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faStar, faCalendar } from "@fortawesome/free-solid-svg-icons";
 export default function Details({
   original_title: title,
   overview,
   genres,
   production_companies: companies,
+  release_date: date,
+  vote_average,
 }) {
   // const{}=props
   return (
@@ -14,7 +18,32 @@ export default function Details({
         <h1>{title}</h1>
         <MoreInfo size={30} onlyFav={true} />
       </div>
+
+      <Box sx={{ display: "flex", gap: "1em" }}>
+        <Chip
+          sx={{
+            width: "10%",
+            display: "flex",
+            alignItems: "center",
+          }}
+          icon={<FontAwesomeIcon icon={faCalendar} />}
+          label={date}
+          color={"info"}
+        />
+        <Chip
+          sx={{
+            width: "10%",
+            display: "flex",
+            alignItems: "center",
+          }}
+          icon={<FontAwesomeIcon icon={faStar} />}
+          label={vote_average}
+          color={vote_average >= 7 ? "success" : "warning"}
+        />
+      </Box>
+
       <hr style={{ width: "50%" }} />
+
       <span>{overview}</span>
 
       <div>
