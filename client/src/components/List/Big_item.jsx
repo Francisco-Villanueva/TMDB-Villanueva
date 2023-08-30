@@ -4,7 +4,8 @@ import MoreInfo from "../../commons/MoreInfo";
 
 export default function Big_item({ tv }) {
   // console.log(tv);
-  const { backdrop_path, name, overview } = tv;
+
+  const { backdrop_path, name, overview, id } = tv;
   return (
     <div className="big_item">
       <img
@@ -14,7 +15,7 @@ export default function Big_item({ tv }) {
       <aside>
         <h2>{name}</h2>
         <span>{overview.slice(0, 350)}</span>
-        <MoreInfo />
+        <MoreInfo id={id} title={name} />
       </aside>
     </div>
   );

@@ -28,6 +28,8 @@ export default function Home() {
               size={40}
               showInfo={handleOpen}
               handlePause={handlePause}
+              title={title}
+              id={id}
             />
             {open ? (
               <ModalInfo

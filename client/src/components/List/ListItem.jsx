@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchVideo } from "../../redux/states/moviesSlice";
 
 export default function ListItem({ movie, onlyFav }) {
-  const { backdrop_path, title, poster_path, id } = movie;
+  const { backdrop_path, title, poster_path, id, name } = movie;
   const { open, handleClose, handleOpen } = useModal();
 
   return (
@@ -24,7 +24,8 @@ export default function ListItem({ movie, onlyFav }) {
           font={20}
           showInfo={handleOpen}
           onlyFav={onlyFav}
-          title={title}
+          title={title || name}
+          id={id}
         />
         {open ? (
           <ModalInfo open={open} handleClose={handleClose} id={id} />

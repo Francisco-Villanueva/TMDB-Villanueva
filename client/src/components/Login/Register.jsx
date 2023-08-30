@@ -31,10 +31,15 @@ export default function Register() {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    axios.post("http://localhost:4000/user/register", userData).then(() => {
-      message.success("Registered succesfully !");
-      setTimeout(() => navigateTo("/login"), 1000);
-    });
+    axios
+      .post("http://localhost:4000/user/register", userData)
+      .then(() => {
+        message.success("Registered succesfully !");
+        setTimeout(() => navigateTo("/login"), 1000);
+      })
+      .catch((e) =>
+        message.error(`Invalid login credentials. Please try again.`)
+      );
 
     setUserData({
       email: "",

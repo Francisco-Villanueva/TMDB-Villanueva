@@ -9,12 +9,7 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
-import {
-  Link as LinkRouter,
-  Route,
-  Routes,
-  useNavigate,
-} from "react-router-dom";
+import { Link as LinkRouter, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { message } from "antd";
 
@@ -30,9 +25,10 @@ export default function Login() {
     axios
       .post("http://localhost:4000/user/login", userData)
       .then((user) => {
+        console.log(user);
         message.success(`Welcome back ${user.data.name} !`);
-        localStorage.setItem("userLogged", user.data.name);
-        setTimeout(() => navigateTo("/home"), 1000);
+        localStorage.setItem("userId", user.data.id);
+        setTimeout(() => navigateTo("/"), 1000);
       })
       .catch(() => {
         message.error("Invalid login credentials. Please try again.");

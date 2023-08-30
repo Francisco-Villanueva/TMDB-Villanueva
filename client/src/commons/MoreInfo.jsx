@@ -12,6 +12,7 @@ export default function MoreInfo({
   handlePause,
   title,
   onlyFav = false,
+  id,
 }) {
   const handleClick = () => {
     showInfo();
@@ -19,7 +20,7 @@ export default function MoreInfo({
   };
 
   const handelFavorites = () => {
-    message.success(`${title} added to favorites !`);
+    message.success(`${title}, id = ${id}`);
   };
   return (
     <Box sx={{ "& > :not(style)": { m: 0.5, border: "none", p: ".5em 0" } }}>

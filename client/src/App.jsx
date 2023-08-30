@@ -58,7 +58,7 @@ function App() {
         <Route path="/register" element={<Landing />} />
 
         <Route
-          path="/home"
+          path="/"
           element={
             <>
               <Navbar search={search} setSearch={setSearch} moviesHook={...moviesHook}/>
