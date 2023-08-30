@@ -1,6 +1,6 @@
 const axios = require("axios");
 require("dotenv").config();
-const { API_KEY } = process.env;
+const { API_KEY, OPTIONS_KEY } = process.env;
 
 const getNowPlaying = async (req, res) => {
   try {
@@ -62,13 +62,27 @@ const getVideoKey = async (req, res) => {
 
 const searchMovie = async (req, res) => {
   try {
-    const { movie_name } = req.body;
+    const { movie_name } = req.params;
+    const options = {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+        Authorization: OPTIONS_KEY,
+      },
+    };
 
     const response = await axios.get(
-      `https://api.themoviedb.org/3/search/movie?query=${movie_name}?api_key=${API_KEY}`
+      `https://api.themoviedb.org/3/search/movie?query=${movie_name}}&include_adult=false&language=en-US&page=1`,
+      options
     );
-
-    res.status(200).json(response.data);
+    res.status(200).json(response.data.results);
+    // fetch(
+    //   `https://api.themoviedb.org/3/search/movie?query=${movie_name}}&include_adult=false&language=en-US&page=1`,
+    //   options
+    // )
+    //   .then((response) => response.json())
+    //   .then((response) => res.status(200).json(response))
+    //   .catch((err) => console.error(err));
   } catch (error) {
     res.status(404).json({ error });
   }

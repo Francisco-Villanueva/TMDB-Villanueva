@@ -4,7 +4,8 @@ import SwitchTheme from "./SwitchTheme";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import Search from "./Search/Search";
-export default function Navbar() {
+export default function Navbar({ search, setSearch, moviesHook }) {
+  // console.log(moviesHook);
   const userLoged = localStorage.getItem("userLogged");
 
   const user = {
@@ -24,11 +25,14 @@ export default function Navbar() {
   // Escuchar el evento de scroll
   window.addEventListener("scroll", handleScroll);
 
+  const handleBack = () => {
+    setSearch("");
+  };
   return (
     <nav id="navbar" className="navbar_main">
-      <h3>TMDB </h3>
+      <h3 onClick={handleBack}>TMDB </h3>
 
-      <Search />
+      <Search search={search} setSearch={setSearch} moviesHook={moviesHook} />
 
       <div className="navbar_profile">
         <SwitchTheme />

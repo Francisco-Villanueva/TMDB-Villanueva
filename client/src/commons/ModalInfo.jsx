@@ -61,7 +61,7 @@ export default function ModalInfo({ open, handleClose, handlePause, id }) {
     }
   }, [id]);
 
-  console.log({ similars });
+  console.log({ trailer });
 
   return (
     <div>
@@ -78,7 +78,7 @@ export default function ModalInfo({ open, handleClose, handlePause, id }) {
           <button onClick={closeHandle} className="modal_closetBtn">
             x
           </button>
-          <VideoPlayer videoId={trailer.key} />
+          <VideoPlayer videoId={trailer?.key} />
           <div className="modal_infoContainer">
             <Details {...selected} />
             <List

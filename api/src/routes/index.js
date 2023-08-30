@@ -3,9 +3,12 @@ const router = express.Router();
 const moviesRoutes = require("./movies/moviesRoutes");
 const tvRoutes = require("./tv/tvRoutes");
 const userRoutes = require("./user/userRoutes");
+const generalRoutes = require("./general/generalRoutes");
+
 router.use("/user", userRoutes);
 router.use("/movies", moviesRoutes);
 router.use("/tv", tvRoutes);
+router.use("/general", generalRoutes);
 
 module.exports = router;
 

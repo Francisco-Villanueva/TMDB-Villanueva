@@ -19,14 +19,20 @@ import {
 } from "./redux/states/tvSlice";
 import { useDispatch, useSelector } from "react-redux";
 import Home_List from "./components/List/Home_List";
-import Login from "./components/Login/Login";
 import Footer from "./components/Footer/Footer";
-import VideoPlayer from "./components/VideoPlayer/VideoPlayer";
-import Register from "./components/Login/Register";
 import Landing from "./components/Login/Landing";
+import useSearch from "./hooks/useSearch";
+import HomePage from "./components/Home/HomePage";
+import Searched from "./components/SearchedResults/Searched";
+import { useMovies } from "./hooks/useMovies";
 
 function App() {
   const dispatch = useDispatch();
+  const { search, error, setSearch } = useSearch();
+  const moviesHook = useMovies({ search });
+
+  const { movies, getMovies, loading } = moviesHook;
+
 
   // getAllInfo
   useEffect(() => {
@@ -55,9 +61,12 @@ function App() {
           path="/home"
           element={
             <>
-              <Navbar />
-              <Home />
-              <Home_List />
+              <Navbar search={search} setSearch={setSearch} moviesHook={...moviesHook}/>
+              {search ? (
+                <Searched busqueda={search} movies_list={movies} />
+              ) : (
+                <HomePage />
+              )}
               <Footer />
             </>
           }
