@@ -32,6 +32,7 @@ export default function ModalInfo({ open, handleClose, handlePause, id }) {
     overview: "",
     popularity: 0,
   });
+  console.log({ id, name: selected.original_title });
 
   const [trailer, setTrailer] = useState({});
 
@@ -44,7 +45,7 @@ export default function ModalInfo({ open, handleClose, handlePause, id }) {
   useEffect(() => {
     if (open) {
       axios
-        .get(`http://localhost:4000/movies/deatails/${id}`)
+        .get(`http://localhost:4000/movies/details/${id}`)
         .then((res) => {
           setSelected(res.data);
           return axios.get(`http://localhost:4000/movies/videos/${id}`);

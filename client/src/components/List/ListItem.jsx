@@ -4,17 +4,22 @@ import useModal from "../../hooks/useModal";
 import ModalInfo from "../../commons/ModalInfo";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchVideo } from "../../redux/states/moviesSlice";
-
+import noImage from "../../imgs/cineLogo.png";
 export default function ListItem({ movie, onlyFav }) {
   const { backdrop_path, title, poster_path, id, name } = movie;
   const { open, handleClose, handleOpen } = useModal();
 
+  // console.log({ id, title });
   return (
     <div className="list_item">
       <img
-        src={`https://image.tmdb.org/t/p/w200${poster_path}`}
+        src={
+          poster_path
+            ? `https://image.tmdb.org/t/p/w200${poster_path}`
+            : noImage
+        }
         alt={title}
-        className="listItem_img"
+        className={poster_path ? "listItem_img" : "listItem_no_img "}
       />
 
       <div className="list_item_info">

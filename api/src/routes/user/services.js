@@ -25,24 +25,24 @@ const getUserById = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const user = await User.findOne(
-      { where: { id: id } },
-      {
-        include: [
-          {
-            model: Playlist,
-            as: "user-playlist",
-            include: { model: Movies, as: "playlist_movie" },
-          },
-          { model: Favorites, as: "user_favorite" },
-        ],
-      }
-    );
+    const user = await User.findOne({
+      where: { id: id },
+      include: [
+        {
+          model: Playlist,
+          as: "user_playlist",
+          include: { model: Movies, as: "playlist_movie" },
+        },
+        { model: Favorites, as: "user_favorite" },
+      ],
+    });
 
     if (!user) {
       console.log("user not found");
       return res.status(401).json({ error: "user not found" });
     }
+
+    console.log("user by ID: \n", user);
     res.status(200).json(user);
   } catch (error) {
     res.status(401).send(error);

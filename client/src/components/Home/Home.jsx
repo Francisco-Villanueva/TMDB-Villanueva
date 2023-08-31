@@ -5,6 +5,10 @@ import useModal from "../../hooks/useModal";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchVideo } from "../../redux/states/moviesSlice";
 import useRandom from "../../hooks/useRandom";
+import noImage from "../../imgs/cineLogo.png";
+import Loading from "../../commons/Loading";
+import { Box } from "@mui/material";
+
 export default function Home() {
   // const [videoToShow, setVideoToShow] = useState([]);
   const dispatch = useDispatch();
@@ -17,32 +21,40 @@ export default function Home() {
   return (
     <section className="home_section">
       <div className="top_movie fade-in-fwd ">
-        <img
-          src={`https://image.tmdb.org/t/p/original${backdrop_path}`}
-          alt={title}
-        />
-        <div className="top_movie_info">
-          <h1>{title}</h1>
-          <div className="top_movie_info_btns">
-            <MoreInfo
-              size={40}
-              showInfo={handleOpen}
-              handlePause={handlePause}
-              title={title}
-              id={id}
+        {backdrop_path ? (
+          <>
+            <img
+              src={`https://image.tmdb.org/t/p/original${backdrop_path}`}
+              alt={title}
             />
-            {open ? (
-              <ModalInfo
-                open={open}
-                handleClose={handleClose}
-                handlePause={handlePause}
-                id={id}
-              />
-            ) : (
-              ""
-            )}
-          </div>
-        </div>
+            <div className="top_movie_info">
+              <h1>{title}</h1>
+              <div className="top_movie_info_btns">
+                <MoreInfo
+                  size={40}
+                  showInfo={handleOpen}
+                  handlePause={handlePause}
+                  title={title}
+                  id={id}
+                />
+                {open ? (
+                  <ModalInfo
+                    open={open}
+                    handleClose={handleClose}
+                    handlePause={handlePause}
+                    id={id}
+                  />
+                ) : (
+                  ""
+                )}
+              </div>
+            </div>
+          </>
+        ) : (
+          <Box sx={{ position: "absolute" }}>
+            <Loading />
+          </Box>
+        )}
       </div>
     </section>
   );

@@ -8,7 +8,6 @@ export default function Navbar({ search, setSearch, moviesHook }) {
   // console.log(moviesHook);'
 
   const { favorites, user, id_LS } = useContext(UserContext);
-  console.log({ user, favorites, id_LS });
 
   const currentUser = {
     name: user.name,
@@ -18,9 +17,9 @@ export default function Navbar({ search, setSearch, moviesHook }) {
   function handleScroll() {
     const navbar = document.getElementById("navbar");
     if (window.scrollY > 0) {
-      navbar.classList.add("scrolled");
+      navbar?.classList.add("scrolled");
     } else {
-      navbar.classList.remove("scrolled");
+      navbar?.classList.remove("scrolled");
     }
   }
 

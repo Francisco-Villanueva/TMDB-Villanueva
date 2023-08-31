@@ -29,6 +29,7 @@ import { useContext } from "react";
 import { UserContext } from "./context/UserContext";
 import Favorites from "./components/Favorites/Favorites";
 import axios from "axios";
+
 function App() {
   const dispatch = useDispatch();
   const { search, error, setSearch } = useSearch();
@@ -40,7 +41,7 @@ function App() {
     if(id_LS && !user.name){
       axios.get(`http://localhost:4000/user/${id_LS}`)
       .then(({data})=>{
-        console.log("ENTRO CUANDO HAY ID, PERO NO USER DATA, METO: \n", data);
+        // console.log("ENTRO CUANDO HAY ID, PERO NO USER DATA, METO: \n", data);
         setUser(data)
       })
     }
@@ -62,7 +63,7 @@ function App() {
     dispatch(fetchOnTheAir());
   }, []);
   return (
-    <div className="app">
+    <div className="app ">
       {/* <UserPopOver /> */}
       <Routes>
         <Route path="/login" element={<Landing />} />

@@ -19,8 +19,9 @@ export function UserProvider({ children }) {
 
   function setUser(user) {
     setState((state) => ({ ...state, user: user }));
+    setFavorites(user.user_favorite);
 
-    console.log("User setteado");
+    console.log("User setteado", user);
   }
 
   const logOut = () => {
@@ -34,6 +35,9 @@ export function UserProvider({ children }) {
         `http://localhost:4000/user/${userId}/favorites/${movieId}`
       );
 
+      const user = await axios.get(`http://localhost:4000/user/${userId}`);
+      setUser(user.data);
+
       console.log(newFavorite.data);
     } catch (error) {
       console.log(error);
@@ -42,7 +46,7 @@ export function UserProvider({ children }) {
 
   const setFavorites = async (array) => {
     const arrayOfMoviesId = array.map((m) => m.idMovie);
-    console.log("Inicio FAVORITES: ", arrayOfMoviesId);
+    // console.log("Inicio FAVORITES: ", arrayOfMoviesId);
 
     const fetchMovieDetails = async (movieId) => {
       try {
