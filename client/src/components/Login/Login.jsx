@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
@@ -12,12 +11,17 @@ import Typography from "@mui/material/Typography";
 import { Link as LinkRouter, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { message } from "antd";
+import useConfig from "antd/es/config-provider/hooks/useConfig";
+import { UserContext } from "../../context/UserContext";
 
 export default function Login() {
   const [userData, setUserData] = useState({
     email: "",
     password: "",
   });
+
+  const { setUser, setFavorites } = useContext(UserContext);
+
   const navigateTo = useNavigate();
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -25,10 +29,14 @@ export default function Login() {
     axios
       .post("http://localhost:4000/user/login", userData)
       .then((user) => {
-        console.log(user);
-        message.success(`Welcome back ${user.data.name} !`);
+        // console.log({ USER: user.data, id: user.data.id });
+        setUser(user.data);
+        setFavorites(user.data.user_favorite);
         localStorage.setItem("userId", user.data.id);
+        message.success(`Welcome back ${user.data.name} !`);
         setTimeout(() => navigateTo("/"), 1000);
+
+        return user.data;
       })
       .catch(() => {
         message.error("Invalid login credentials. Please try again.");

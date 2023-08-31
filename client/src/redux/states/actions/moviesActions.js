@@ -51,3 +51,15 @@ export const getVideo = async (movie_id) => {
     console.log(error);
   }
 };
+
+export async function getMovieDetails(id) {
+  try {
+    const movieDetails = await axios.get(
+      `http://localhost:4000/movies/deatails/${id}`
+    );
+
+    return movieDetails.data;
+  } catch (error) {
+    console.log(error);
+  }
+}

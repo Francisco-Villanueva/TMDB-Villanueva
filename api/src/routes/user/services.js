@@ -9,10 +9,10 @@ const getAllUsers = async (req, res) => {
       include: [
         {
           model: Playlist,
-          as: "user-playlist",
-          include: { model: Movies, as: "playlist-movie" },
+          as: "user_playlist",
+          include: { model: Movies, as: "playlist_movie" },
         },
-        { model: Favorites, as: "user-favorite" },
+        { model: Favorites, as: "user_favorite" },
       ],
     });
 
@@ -25,18 +25,22 @@ const getUserById = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const user = await User.findByPk(id, {
-      include: [
-        {
-          model: Playlist,
-          as: "user-playlist",
-          include: { model: Movies, as: "playlist-movie" },
-        },
-        { model: Favorites, as: "user-favorite" },
-      ],
-    });
+    const user = await User.findOne(
+      { where: { id: id } },
+      {
+        include: [
+          {
+            model: Playlist,
+            as: "user-playlist",
+            include: { model: Movies, as: "playlist_movie" },
+          },
+          { model: Favorites, as: "user_favorite" },
+        ],
+      }
+    );
 
     if (!user) {
+      console.log("user not found");
       return res.status(401).json({ error: "user not found" });
     }
     res.status(200).json(user);
@@ -121,7 +125,7 @@ const getPlaylist = async (req, res) => {
     // 3. Comprobar si el favorito ya existe en la lista de favoritos del usuario
     const playlist = await Playlist.findAll({
       where: { UserId: userId },
-      include: { model: Movies, as: "playlist-movie" },
+      include: { model: Movies, as: "playlist_movie" },
     });
 
     res.status(200).json(playlist);

@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Box } from "@mui/material";
 import Fab from "@mui/material/Fab";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import { message } from "antd";
+import { UserContext } from "../context/UserContext";
 
 export default function MoreInfo({
   size,
@@ -14,13 +15,19 @@ export default function MoreInfo({
   onlyFav = false,
   id,
 }) {
+  const { user, addToFavorites } = useContext(UserContext);
   const handleClick = () => {
     showInfo();
     if (handlePause) handlePause();
   };
 
   const handelFavorites = () => {
-    message.success(`${title}, id = ${id}`);
+    if (!user.name) {
+      message.warning(`Log in to add to favorites.`);
+    } else {
+      addToFavorites(user.id, id);
+      message.success(`${title} added to your favorites !`);
+    }
   };
   return (
     <Box sx={{ "& > :not(style)": { m: 0.5, border: "none", p: ".5em 0" } }}>

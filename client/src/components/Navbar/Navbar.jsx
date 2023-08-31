@@ -1,23 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useContext, useState, Profiler } from "react";
 import Profile from "./Profile";
 import SwitchTheme from "./SwitchTheme";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import Search from "./Search/Search";
-import axios from "axios";
+import Popover from "@mui/material/Popover";
+import { UserContext } from "../../context/UserContext";
 export default function Navbar({ search, setSearch, moviesHook }) {
-  // console.log(moviesHook);
-  const id = localStorage.getItem("userId");
-  const [userLoged, setUserLogged] = useState({});
-  useEffect(() => {
-    if (id) {
-      axios.get(`http://localhost:4000/user/${id}`).then((user) => {
-        setUserLogged(user.data);
-      });
-    }
-  }, [userLoged]);
-  const user = {
-    name: userLoged.name,
+  // console.log(moviesHook);'
+
+  const { favorites, user, id_LS } = useContext(UserContext);
+  console.log({ user, favorites, id_LS });
+
+  const currentUser = {
+    name: user.name,
     color: "#fff",
   };
   // Función para cambiar el estilo del navbar al hacer scroll
@@ -44,7 +38,7 @@ export default function Navbar({ search, setSearch, moviesHook }) {
 
       <div className="navbar_profile">
         <SwitchTheme />
-        <Profile user={user} />
+        <Profile user={currentUser} />
       </div>
     </nav>
   );

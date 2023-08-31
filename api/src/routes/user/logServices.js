@@ -1,5 +1,7 @@
 const { User } = require("../../models/User");
 const { generateToken, validateToken } = require("../../config/tokens");
+const { Favorites } = require("../../models/Favorites");
+const { Playlist } = require("../../models/Playlist");
 
 const register = async (req, res) => {
   try {
@@ -32,6 +34,10 @@ const login = async (req, res) => {
       where: {
         email: email,
       },
+      include: [
+        { model: Playlist, as: "user_playlist" },
+        { model: Favorites, as: "user_favorite" },
+      ],
     });
 
     if (!userToCheck) {
@@ -55,7 +61,7 @@ const login = async (req, res) => {
 
       res.cookie("token", token);
 
-      res.json(payload);
+      res.json(userToCheck);
     }
   } catch (error) {
     console.log({ error });
