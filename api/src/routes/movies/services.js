@@ -1,51 +1,6 @@
 const axios = require("axios");
 require("dotenv").config();
-const { API_KEY, OPTIONS_KEY } = process.env;
-
-const getNowPlaying = async (req, res) => {
-  try {
-    const nowPlaying = await axios.get(
-      `https://api.themoviedb.org/3/movie/now_playing?api_key=${API_KEY}&append_to_response=videos`
-    );
-
-    res.status(200).json(nowPlaying.data);
-  } catch (error) {
-    res.status(404).json({ error });
-  }
-};
-const getPopular = async (req, res) => {
-  try {
-    const popular = await axios.get(
-      `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&append_to_response=videos`
-    );
-
-    res.status(200).json(popular.data);
-  } catch (error) {
-    res.status(404).json({ error });
-  }
-};
-const getTopRated = async (req, res) => {
-  try {
-    const topRated = await axios.get(
-      `https://api.themoviedb.org/3/movie/top_rated?api_key=${API_KEY}&append_to_response=videos`
-    );
-
-    res.status(200).json(topRated.data);
-  } catch (error) {
-    res.status(404).json({ error });
-  }
-};
-const getUpcoming = async (req, res) => {
-  try {
-    const upcoming = await axios.get(
-      `https://api.themoviedb.org/3/movie/upcoming?api_key=${API_KEY}&append_to_response=videos`
-    );
-
-    res.status(200).json(upcoming.data);
-  } catch (error) {
-    res.status(404).json({ error });
-  }
-};
+const { API_KEY } = process.env;
 
 const getVideoKey = async (req, res) => {
   try {
@@ -55,34 +10,6 @@ const getVideoKey = async (req, res) => {
     );
 
     res.status(200).json(videos.data);
-  } catch (error) {
-    res.status(404).json({ error });
-  }
-};
-
-const searchMovie = async (req, res) => {
-  try {
-    const { movie_name } = req.params;
-    const options = {
-      method: "GET",
-      headers: {
-        accept: "application/json",
-        Authorization: OPTIONS_KEY,
-      },
-    };
-
-    const response = await axios.get(
-      `https://api.themoviedb.org/3/search/movie?query=${movie_name}}&include_adult=false&language=en-US&page=1`,
-      options
-    );
-    res.status(200).json(response.data.results);
-    // fetch(
-    //   `https://api.themoviedb.org/3/search/movie?query=${movie_name}}&include_adult=false&language=en-US&page=1`,
-    //   options
-    // )
-    //   .then((response) => response.json())
-    //   .then((response) => res.status(200).json(response))
-    //   .catch((err) => console.error(err));
   } catch (error) {
     res.status(404).json({ error });
   }
@@ -114,15 +41,41 @@ const getSimilar = async (req, res) => {
     res.status(404).json({ error });
   }
 };
+
+const allMoviesData = async (req, res) => {
+  try {
+    const upcoming = await axios.get(
+      `https://api.themoviedb.org/3/movie/upcoming?api_key=${API_KEY}&append_to_response=videos`
+    );
+    // const nowPlaying = await getNowPlaying();
+    const nowPlaying = await axios.get(
+      `https://api.themoviedb.org/3/movie/now_playing?api_key=${API_KEY}&append_to_response=videos`
+    );
+    // const popular = await getPopular();
+    const popular = await axios.get(
+      `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&append_to_response=videos`
+    );
+    const topRated = await axios.get(
+      `https://api.themoviedb.org/3/movie/top_rated?api_key=${API_KEY}&append_to_response=videos`
+    );
+
+    const objRespones = {
+      popular: popular.data.results,
+      topRated: topRated.data.results,
+      upcoming: upcoming.data.results,
+      nowPlaying: nowPlaying.data.results,
+    };
+
+    res.status(200).json(objRespones);
+  } catch (error) {
+    res.status(404).json({ error });
+  }
+};
 module.exports = {
-  getNowPlaying,
-  getPopular,
-  getTopRated,
-  getUpcoming,
   getVideoKey,
-  searchMovie,
   getDetails,
   getSimilar,
+  allMoviesData,
 };
 
 // curl --request GET \

@@ -3,19 +3,21 @@ import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
 import "./index.scss";
 import { ThemeProvider } from "./context/ThemeContext.jsx";
-import { store } from "./redux/store/store.js";
-import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 import { UserProvider } from "./context/UserContext.jsx";
+import { MoviesProvider } from "./context/MoviesContext.jsx";
+import { TvProvider } from "./context/TvContext.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <UserProvider>
-    <Provider store={store}>
-      <ThemeProvider>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
-      </ThemeProvider>
-    </Provider>
+    <MoviesProvider>
+      <TvProvider>
+        <ThemeProvider>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </ThemeProvider>
+      </TvProvider>
+    </MoviesProvider>
   </UserProvider>
 );

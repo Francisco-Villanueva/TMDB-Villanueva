@@ -5,17 +5,19 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar, faCalendar } from "@fortawesome/free-solid-svg-icons";
 export default function Details({
   original_title: title,
+  original_name: name,
   overview,
   genres,
   production_companies: companies,
   release_date: date,
+  first_air_date: date2,
   vote_average,
 }) {
   // const{}=props
   return (
     <div className="details_container">
       <div className="details_top">
-        <h1>{title}</h1>
+        <h1>{title || name}</h1>
         <MoreInfo size={30} onlyFav={true} />
       </div>
 
@@ -27,7 +29,7 @@ export default function Details({
             alignItems: "center",
           }}
           icon={<FontAwesomeIcon icon={faCalendar} />}
-          label={date}
+          label={date || date2}
           color={"info"}
         />
         <Chip

@@ -1,15 +1,10 @@
 const express = require("express");
 const router = express.Router();
-const {
-  getAiringToday,
-  getOnTheAir,
-  getPopular,
-  getTopRated,
-} = require("./services");
+const { getDetails, allTvData, getVideo, getSimilar } = require("./services");
 
-router.get("/onTheAir", getOnTheAir);
-router.get("/airingToday", getAiringToday);
-router.get("/popular", getPopular);
-router.get("/topRated", getTopRated);
+router.get("/", allTvData);
+router.get("/details/:tv_id", getDetails);
+router.get("/video/:tv_id", getVideo);
+router.get("/similar/:tv_id", getSimilar);
 
 module.exports = router;

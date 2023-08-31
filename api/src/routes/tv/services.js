@@ -1,54 +1,75 @@
 const axios = require("axios");
 require("dotenv").config();
 const { API_KEY } = process.env;
-
-const getAiringToday = async (req, res) => {
+const allTvData = async (req, res) => {
   try {
-    const response = await axios.get(
-      `https://api.themoviedb.org/3/tv/airing_today?api_key=${API_KEY}`
+    const airingToday = await axios.get(
+      `https://api.themoviedb.org/3/tv/airing_today?api_key=${API_KEY}&page=3`
     );
-
-    res.status(200).json(response.data);
-  } catch (error) {
-    res.status(401).json({ error });
-  }
-};
-const getOnTheAir = async (req, res) => {
-  try {
-    const response = await axios.get(
-      `https://api.themoviedb.org/3/tv/on_the_air?api_key=${API_KEY}`
+    const onTheAir = await axios.get(
+      `https://api.themoviedb.org/3/tv/on_the_air?api_key=${API_KEY}&page=2`
     );
-
-    res.status(200).json(response.data);
-  } catch (error) {
-    res.status(401).json({ error });
-  }
-};
-const getPopular = async (req, res) => {
-  try {
-    const response = await axios.get(
+    const popular = await axios.get(
       `https://api.themoviedb.org/3/tv/popular?api_key=${API_KEY}`
     );
-
-    res.status(200).json(response.data);
-  } catch (error) {
-    res.status(401).json({ error });
-  }
-};
-const getTopRated = async (req, res) => {
-  try {
-    const response = await axios.get(`
+    const topRated = await axios.get(`
     https://api.themoviedb.org/3/tv/top_rated?api_key=${API_KEY}`);
 
-    res.status(200).json(response.data);
+    const objRespones = {
+      popular: popular.data.results,
+      topRated: topRated.data.results,
+      airingToday: airingToday.data.results,
+      onTheAir: onTheAir.data.results,
+    };
+
+    res.status(200).json(objRespones);
   } catch (error) {
-    res.status(401).json({ error });
+    res.status(404).json({ error });
   }
 };
 
+const getDetails = async (req, res) => {
+  try {
+    const { tv_id } = req.params;
+
+    const response = await axios.get(
+      `https://api.themoviedb.org/3/tv/${tv_id}?api_key=${API_KEY}`
+    );
+
+    res.status(200).json(response.data);
+  } catch (error) {
+    res.status(404).json({ error });
+  }
+};
+
+const getVideo = async (req, res) => {
+  try {
+    const { tv_id } = req.params;
+    const videos = await axios.get(
+      `https://api.themoviedb.org/3/tv/${tv_id}/videos?api_key=${API_KEY}`
+    );
+
+    res.status(200).json(videos.data);
+  } catch (error) {
+    res.status(404).json({ error });
+  }
+};
+
+const getSimilar = async (req, res) => {
+  try {
+    const { tv_id } = req.params;
+
+    const response = await axios.get(`
+    https://api.themoviedb.org/3/tv/${tv_id}/similar?api_key=${API_KEY}`);
+
+    res.status(200).json(response.data);
+  } catch (error) {
+    res.status(404).json({ error });
+  }
+};
 module.exports = {
-  getAiringToday,
-  getOnTheAir,
-  getPopular,
-  getTopRated,
+  allTvData,
+  getDetails,
+  getVideo,
+  getSimilar,
 };

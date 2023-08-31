@@ -2,8 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Box, backdropClasses } from "@mui/material";
 import Modal from "@mui/material/Modal";
 import VideoPlayer from "../components/VideoPlayer/VideoPlayer";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchVideo } from "../redux/states/moviesSlice";
 import axios from "axios";
 import Details from "./Details/Details";
 import List from "../components/List/List";
@@ -22,7 +20,13 @@ const style = {
   p: 1,
 };
 
-export default function ModalInfo({ open, handleClose, handlePause, id }) {
+export default function ModalInfo({
+  open,
+  handleClose,
+  handlePause,
+  id,
+  type,
+}) {
   const [selected, setSelected] = useState({
     original_title: "",
     production_companies: [],
@@ -32,7 +36,7 @@ export default function ModalInfo({ open, handleClose, handlePause, id }) {
     overview: "",
     popularity: 0,
   });
-  console.log({ id, name: selected.original_title });
+  console.log({ id, selected });
 
   const [trailer, setTrailer] = useState({});
 
@@ -44,25 +48,43 @@ export default function ModalInfo({ open, handleClose, handlePause, id }) {
 
   useEffect(() => {
     if (open) {
-      axios
-        .get(`http://localhost:4000/movies/details/${id}`)
-        .then((res) => {
-          setSelected(res.data);
-          return axios.get(`http://localhost:4000/movies/videos/${id}`);
-        })
-        .then((video) => {
-          const OficialTrailer = video.data.results.filter(
-            (e) => e.type === "Trailer"
-          )[0];
-          return setTrailer(OficialTrailer);
-        });
-      axios
-        .get(`http://localhost:4000/movies/similar/${id}`)
-        .then((res) => setSimilars(res.data.results));
+      if (type === "movie") {
+        axios
+          .get(`http://localhost:4000/movies/details/${id}`)
+          .then((res) => {
+            setSelected(res.data);
+            return axios.get(`http://localhost:4000/movies/videos/${id}`);
+          })
+          .then((video) => {
+            const OficialTrailer = video.data.results.filter(
+              (e) => e.type === "Trailer"
+            )[0];
+            return setTrailer(OficialTrailer);
+          });
+        axios
+          .get(`http://localhost:4000/movies/similar/${id}`)
+          .then((res) => setSimilars(res.data.results));
+      } else if (type === "tv") {
+        axios
+          .get(`http://localhost:4000/tv/details/${id}`)
+          .then((res) => {
+            setSelected(res.data);
+            return axios.get(`http://localhost:4000/tv/videos/${id}`);
+          })
+          .then((video) => {
+            const OficialTrailer = video.data.results.filter(
+              (e) => e.type === "Trailer"
+            )[0];
+            return setTrailer(OficialTrailer);
+          });
+        axios
+          .get(`http://localhost:4000/tv/similar/${id}`)
+          .then((res) => setSimilars(res.data.results));
+      }
     }
   }, [id]);
 
-  console.log({ trailer });
+  // console.log({ trailer });
 
   return (
     <div>
