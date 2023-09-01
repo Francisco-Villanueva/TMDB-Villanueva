@@ -103,7 +103,7 @@ export default function ModalInfo({
           </button>
           <VideoPlayer videoId={trailer?.key} />
           <div className="modal_infoContainer">
-            <Details {...selected} />
+            <Details {...selected} id={id} type={type} />
             <List
               list_name={"Similars"}
               movies_list={similars}

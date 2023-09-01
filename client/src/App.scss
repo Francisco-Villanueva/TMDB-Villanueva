@@ -30,25 +30,25 @@ h6 {
 }
 
 /* Estilo de la barra de desplazamiento */
-.list_container::-webkit-scrollbar {
+* ::-webkit-scrollbar {
   margin: 10px;
   width: 2px; /* Ancho de la barra de desplazamiento */
   height: 8px; /* Ancho de la barra de desplazamiento */
 }
 
 /* Estilo del pulgar (scrollbar thumb) */
-.list_container::-webkit-scrollbar-thumb {
+* ::-webkit-scrollbar-thumb {
   margin: 10px;
   background-color: #61918d; /* Color del pulgar */
   border-radius: 5px; /* Radio de borde del pulgar */
 }
 
 /* Estilo de la pista (scrollbar track) */
-.list_container::-webkit-scrollbar-track {
+* ::-webkit-scrollbar-track {
   background-color: #ffffff00; /* Color de la pista */
 }
 
 /* Estilo de la pista cuando se pasa el mouse por encima */
-.list_container::-webkit-scrollbar-track:hover {
+* ::-webkit-scrollbar-track:hover {
   background-color: none;
 }

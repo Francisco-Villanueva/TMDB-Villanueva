@@ -14,6 +14,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import PlaylistCard from "./PlaylistCard/PlaylistCard";
+import { TransitionGroup } from "react-transition-group";
+import CardsContainer from "./PlaylistCard/CardsContainer";
 export default function UserProfile() {
   const { user, favorites_movie, favorites_tv, createPlaylist } =
     useContext(UserContext);
@@ -38,10 +40,10 @@ export default function UserProfile() {
         </Link>
       </button>
       <br />
-
+      {/* 
       <Divider>
         <h3>Profile</h3>
-      </Divider>
+      </Divider> */}
       <UserCard user={user} />
 
       <div className="playlists_favorites_section">
@@ -70,25 +72,7 @@ export default function UserProfile() {
           <Divider>
             <h3>Playlist</h3>
           </Divider>
-          <div className="userProfiler_playlist_section">
-            <form className="form_newPlaylist" onSubmit={handleSubmit}>
-              <input
-                className="newPlaylis_input"
-                type="text"
-                value={playlist_name}
-                placeholder="Playlist Name..."
-                onChange={handleInputPlaylist}
-              />
-              <button className="newPlaylis_btn"> + </button>
-            </form>
-            <div className="playlist_container">
-              {user.user_playlist?.length ? (
-                user.user_playlist.map((e) => <PlaylistCard playlist={e} />)
-              ) : (
-                <p>No playlists !</p>
-              )}
-            </div>
-          </div>
+          <CardsContainer playlist={user.user_playlist} />
         </div>
       </div>
     </div>

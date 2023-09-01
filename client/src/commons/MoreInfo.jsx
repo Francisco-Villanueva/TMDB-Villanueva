@@ -56,24 +56,28 @@ export default function MoreInfo({
         </Fab>
       )}
 
-      {!isFavorite(id, type) ? (
-        <Fab
-          onClick={handelFavorites}
-          aria-label="like"
-          color="info"
-          sx={{ width: size, height: size, minHeight: "1px", p: 2 }}
-        >
-          <FavoriteIcon sx={{ fontSize: font || 20 }} />
-        </Fab>
+      {user.name ? (
+        !isFavorite(id, type) ? (
+          <Fab
+            onClick={handelFavorites}
+            aria-label="like"
+            color="info"
+            sx={{ width: size, height: size, minHeight: "1px", p: 2 }}
+          >
+            <FavoriteIcon sx={{ fontSize: font || 20 }} />
+          </Fab>
+        ) : (
+          <Fab
+            onClick={handelFavorites}
+            aria-label="like"
+            color="default"
+            sx={{ width: size, height: size, minHeight: "1px", p: 2 }}
+          >
+            <DeleteIcon sx={{ fontSize: font || 20 }} />
+          </Fab>
+        )
       ) : (
-        <Fab
-          onClick={handelFavorites}
-          aria-label="like"
-          color="default"
-          sx={{ width: size, height: size, minHeight: "1px", p: 2 }}
-        >
-          <DeleteIcon sx={{ fontSize: font || 20 }} />
-        </Fab>
+        ""
       )}
     </Box>
   );

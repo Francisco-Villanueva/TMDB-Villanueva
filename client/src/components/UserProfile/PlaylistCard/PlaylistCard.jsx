@@ -1,5 +1,6 @@
 import { Chip } from "@mui/material";
 import React from "react";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 export default function PlaylistCard({ playlist }) {
   console.log({ playlist });
@@ -17,6 +18,7 @@ export default function PlaylistCard({ playlist }) {
       <span>
         <b> {playlist_movie.length} </b> | movies
       </span>
+      <DeleteIcon />
     </div>
   );
 }

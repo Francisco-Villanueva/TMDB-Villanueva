@@ -49,8 +49,46 @@ export default function Profile({ user }) {
               horizontal: "left",
             }}
           >
-            <Button onClick={logOut}>Log out</Button>
-            <Button onClick={() => navTo("/user")}>User</Button>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                width: "5vw",
+                // gap: "1em",
+              }}
+            >
+              <button
+                style={{
+                  padding: "10px",
+                  background: "#fff",
+                  color: "#000",
+                  border: "none",
+                  fontWeight: "600",
+                  textAlign: "start",
+                  paddingLeft: "15px",
+                  cursor: "pointer",
+                  ":hover": "color",
+                }}
+                onClick={() => navTo("/user")}
+              >
+                User
+              </button>
+              <button
+                style={{
+                  padding: "10px",
+                  background: "#cecece",
+                  color: "#000",
+                  border: "none",
+                  fontWeight: "600",
+                  textAlign: "start",
+                  paddingLeft: "15px",
+                  cursor: "pointer",
+                }}
+                onClick={logOut}
+              >
+                Log out{" "}
+              </button>
+            </div>
           </Popover>
         </>
       ) : (

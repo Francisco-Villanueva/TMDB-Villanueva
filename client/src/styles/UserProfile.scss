@@ -28,12 +28,12 @@
   box-shadow: 1px 1px 4px #000;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  // width: 50%;
-  gap: 10px;
-  margin: auto;
+  justify-content: space-around;
+  width: 50%;
+  gap: 100px;
+  // margin: auto;
   border-radius: 100px 30px 30px 100px;
-  padding-right: 20px;
+  // padding-right: 20px;
 }
 .user_card_info {
   display: flex;
@@ -83,9 +83,12 @@
   flex: 1;
 }
 .userProfiler_playlist_section {
-  // outline: 1px solid #fff;
-  // max-width: 100%;
-  // height: 80vh;
+  outline: 2px solid rgba($main, 0.25);
+  border-radius: 10px;
+  max-width: 80%;
+  margin: auto;
+  padding: 0 20px;
+  height: 90vh;
 }
 
 .userProfiler_favorites_section {
@@ -98,12 +101,12 @@
 }
 
 .favoriteList_container {
-  background-color: rgba($main, 0.8);
+  // background-color: rgba($main, 0.1);
   width: 90%;
-  outline: 1px solid #0000003a;
-  // outline: 1px solid #fff;
-  // padding: 0 20px;
-  box-shadow: -1px -2px 2px #0000003a;
+  // outline: 2px solid rgba($main, 0.25);
+  outline: 1px solid #ffffff1d;
+  padding: 0 20px;
+  // box-shadow: -1px -2px 2px #000000dc;
   border-radius: 10px;
 }
 

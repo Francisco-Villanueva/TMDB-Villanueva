@@ -2,19 +2,21 @@
   display: flex;
   flex-direction: column;
   // justify-content: space-around;
-  align-items: center;
+  // align-items: center;
   gap: 1em;
-  margin: 10px 0;
+  // margin: 10px 0;
   // background-color: aliceblue;
   min-height: 40vh;
 }
 .playlistCard_main {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 3fr 3fr 1fr;
   align-items: center;
-  background-color: $main;
+  background-color: rgba($main, 0.3);
   padding: 10px;
-  border-radius: 8px;
+  border-radius: 10px;
   box-shadow: 2px 4px 4px #000;
-  width: 80%;
+  width: 100%;
+
+  margin: 5px 0;
 }

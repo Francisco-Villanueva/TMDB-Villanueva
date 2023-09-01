@@ -12,13 +12,15 @@ export default function Details({
   release_date: date,
   first_air_date: date2,
   vote_average,
+  id,
+  type,
 }) {
   // const{}=props
   return (
     <div className="details_container">
       <div className="details_top">
         <h1>{title || name}</h1>
-        <MoreInfo size={30} onlyFav={true} />
+        <MoreInfo size={30} onlyFav={true} id={id} title={title} type={type} />
       </div>
 
       <Box sx={{ display: "flex", gap: "1em" }}>

@@ -16,16 +16,16 @@ export default function UserCard({ user }) {
       <Avatar sx={{ width: 156, height: 156 }}>
         {user.name.slice(0, 1).toUpperCase()}
       </Avatar>
-      <div className="user_card_info">
-        <div className="user_data">
-          <h2>{user.name}</h2>
-          <h5>{user.email}</h5>
-        </div>
-        <div className="editBtn_container">
-          <button className="editUser_btn">
-            <FontAwesomeIcon icon={faEdit} />
-          </button>
-        </div>
+
+      <div className="user_data">
+        <h2>{user.name}</h2>
+        <h5>{user.email}</h5>
+      </div>
+
+      <div className="editBtn_container">
+        <button className="editUser_btn">
+          <FontAwesomeIcon icon={faEdit} />
+        </button>
       </div>
     </div>
   );
