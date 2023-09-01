@@ -1,24 +1,21 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useContext, useState } from "react";
 import Paper from "@mui/material/Paper";
 import InputBase from "@mui/material/InputBase";
 import IconButton from "@mui/material/IconButton";
 import SearchIcon from "@mui/icons-material/Search";
-import useSearch from "../../../hooks/useSearch";
 import debounce from "just-debounce-it";
-import { useMovies } from "../../../hooks/useMovies";
-import TextField from "@mui/material/TextField";
-import Autocomplete from "@mui/material/Autocomplete";
+import { SearchContext } from "../../../context/SearchContext";
 
-export default function Search({ search, setSearch, moviesHook }) {
+export default function Search({}) {
+  const { getMovies, search, setSearch } = useContext(SearchContext);
   const [sort, setSort] = useState(false);
-
   const debouncedGetMovies = useCallback(
     debounce((search) => {
       getMovies({ search });
     }, 300),
     []
   );
-  const { movies, getMovies, loading } = moviesHook;
+
   const handleSumbit = (e) => {
     e.preventDefault();
     // console.log("buscar ", search);

@@ -1,8 +1,8 @@
 const { DataTypes, Model } = require("sequelize");
 const sequelize = require("../db");
-class Favorites extends Model {}
+class FavoritesMovie extends Model {}
 
-Favorites.init(
+FavoritesMovie.init(
   {
     idMovie: {
       type: DataTypes.INTEGER,
@@ -10,8 +10,8 @@ Favorites.init(
   },
   {
     sequelize: sequelize,
-    modelName: "favorites",
+    modelName: "favoritesMovie",
     timestamps: false,
   }
 );
-module.exports = { Favorites };
+module.exports = { FavoritesMovie };

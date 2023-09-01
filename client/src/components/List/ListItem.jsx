@@ -4,7 +4,7 @@ import useModal from "../../hooks/useModal";
 import ModalInfo from "../../commons/ModalInfo";
 import noImage from "../../imgs/cineLogo.png";
 export default function ListItem({ movie, onlyFav, type }) {
-  const { backdrop_path, title, poster_path, id, name } = movie;
+  const { title, poster_path, id, name } = movie;
   const { open, handleClose, handleOpen } = useModal();
 
   // console.log({ id, title });
@@ -30,6 +30,7 @@ export default function ListItem({ movie, onlyFav, type }) {
           onlyFav={onlyFav}
           title={title || name}
           id={id}
+          type={type}
         />
         {open ? (
           <ModalInfo

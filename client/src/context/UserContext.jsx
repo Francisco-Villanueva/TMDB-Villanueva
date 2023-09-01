@@ -1,8 +1,10 @@
+import { message } from "antd";
 import axios from "axios";
 import { createContext, useState } from "react";
 const initialState = {
   user: {},
-  favorites: [],
+  favorites_tv: [],
+  favorites_movie: [],
   playlists: [],
   id_LS: localStorage.getItem("userId") ? localStorage.getItem("userId") : "",
 };
@@ -12,16 +14,17 @@ export const UserContext = createContext(initialState);
 export function UserProvider({ children }) {
   const [state, setState] = useState({
     user: {},
-    favorites: [],
+    favorites_tv: [],
+    favorites_movie: [],
     playlists: [],
     id_LS: localStorage.getItem("userId"),
   });
 
   function setUser(user) {
     setState((state) => ({ ...state, user: user }));
-    setFavorites(user.user_favorite);
+    setFavorites(user.user_favorite_movie, user.user_favorite_tv);
 
-    console.log("User setteado", user);
+    // console.log("User setteado", user);
   }
 
   const logOut = () => {
@@ -29,23 +32,80 @@ export function UserProvider({ children }) {
     setState((s) => ({ ...s, id_LS: null, user: {} }));
   };
 
-  const addToFavorites = async (userId, movieId) => {
+  const addToFavorites_movie = async (userId, movieId, title) => {
     try {
       const newFavorite = await axios.post(
-        `http://localhost:4000/user/${userId}/favorites/${movieId}`
+        `http://localhost:4000/user/${userId}/favorites/movies/${movieId}`
       );
 
       const user = await axios.get(`http://localhost:4000/user/${userId}`);
       setUser(user.data);
 
-      console.log(newFavorite.data);
+      message.success(`${title} added to your favorites  !`, 1);
+    } catch (error) {
+      // message.success(`${title} already exisist your favorites  ${type} !`);
+
+      console.log(error);
+    }
+  };
+  const deleteFavorites_movie = async (userId, movieId, title) => {
+    try {
+      const newFavorite = await axios.delete(
+        `http://localhost:4000/user/${userId}/favorites/movies/${movieId}`
+      );
+
+      const user = await axios.get(`http://localhost:4000/user/${userId}`);
+
+      setUser(user.data);
+      // message.destroy
+      message.info(`${title} deleted from favorites  !`);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const addToFavorites_tv = async (userId, tvId, title) => {
+    try {
+      const newFavorite = await axios.post(
+        `http://localhost:4000/user/${userId}/favorites/tv/${tvId}`
+      );
+
+      const user = await axios.get(`http://localhost:4000/user/${userId}`);
+      setUser(user.data);
+
+      message.success(`${title} added to your favorites  ${type} !`);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const deleteFavorites_tv = async (userId, tvId, title) => {
+    try {
+      const newFavorite = await axios.delete(
+        `http://localhost:4000/user/${userId}/favorites/tv/${tvId}`
+      );
+
+      const user = await axios.get(`http://localhost:4000/user/${userId}`);
+      setUser(user.data);
+
+      message.destroy(`${title} deleted from favorites ${type} !`);
     } catch (error) {
       console.log(error);
     }
   };
 
-  const setFavorites = async (array) => {
-    const arrayOfMoviesId = array.map((m) => m.idMovie);
+  const isFavorite = (idToCheck, type) => {
+    const fav_id_movie = state.user.user_favorite_movie.map((m) => m.idMovie);
+    const fav_id_tv = state.user.user_favorite_tv.map((m) => m.idTv);
+
+    // console.log({ type, idToCheck, fav_id_movie, fav_id_tv });
+
+    return type === "movie"
+      ? fav_id_movie.includes(idToCheck)
+      : fav_id_tv.includes(idToCheck);
+  };
+
+  const setFavorites = async (arrayMovies, arrayTv) => {
+    const arrayOfTvsId = arrayTv.map((m) => m.idTv);
+    const arrayOfMoviesId = arrayMovies.map((m) => m.idMovie);
     // console.log("Inicio FAVORITES: ", arrayOfMoviesId);
 
     const fetchMovieDetails = async (movieId) => {
@@ -60,19 +120,40 @@ export function UserProvider({ children }) {
         // return null;
       }
     };
+    const fetchTvDetails = async (tvId) => {
+      try {
+        const response = await axios.get(
+          `http://localhost:4000/tv/details/${tvId}`
+        );
+
+        return response.data; // Suponiendo que los detalles de la película se encuentren en response.data
+      } catch (error) {
+        console.error("Error al obtener detalles de la tv serie:", error);
+        // return null;
+      }
+    };
 
     // Función para obtener los detalles de todas las películas en arrayOfMoviesId
     const fetchAllMovieDetails = async () => {
       try {
-        const detailsPromises = arrayOfMoviesId.map((movieId) =>
+        const detailsPromises_Movies = arrayOfMoviesId.map((movieId) =>
           fetchMovieDetails(movieId)
         );
-        const movieDetailsArray = await Promise.all(detailsPromises);
+        const detailsPromises_Tv = arrayOfTvsId.map((movieId) =>
+          fetchTvDetails(movieId)
+        );
+        const movie_DetailsArray = await Promise.all(detailsPromises_Movies);
+        const tv_DetailsArray = await Promise.all(detailsPromises_Tv);
+
         // console.log("EN PROMISE ALL", { movieDetailsArray });
 
-        setState((state) => ({ ...state, favorites: movieDetailsArray }));
+        setState((state) => ({
+          ...state,
+          favorites_movie: movie_DetailsArray,
+          favorites_tv: tv_DetailsArray,
+        }));
 
-        return movieDetailsArray;
+        return { movie_DetailsArray, tv_DetailsArray };
       } catch (error) {
         console.log({ error });
       }
@@ -80,14 +161,31 @@ export function UserProvider({ children }) {
 
     fetchAllMovieDetails();
   };
+
+  const createPlaylist = async (userId, playlist_name) => {
+    try {
+      await axios.post(`http://localhost:4000/user/${userId}/playlist`, {
+        playlist_name,
+      });
+      const user = await axios.get(`http://localhost:4000/user/${userId}`);
+      setUser(user.data);
+
+      message.success(`Playlist ${playlist_name}, created succesfully !`);
+    } catch (error) {}
+  };
   return (
     <UserContext.Provider
       value={{
         ...state,
         setUser,
         logOut,
-        addToFavorites,
+        addToFavorites_movie,
+        addToFavorites_tv,
         setFavorites,
+        deleteFavorites_movie,
+        deleteFavorites_tv,
+        isFavorite,
+        createPlaylist,
       }}
     >
       {children}

@@ -7,6 +7,7 @@ import noImage from "../../imgs/cineLogo.png";
 import Loading from "../../commons/Loading";
 import { Box } from "@mui/material";
 import { MoviesContext } from "../../context/MoviesContext";
+import { UserContext } from "../../context/UserContext";
 
 export default function Home() {
   const [homeMovie, setHomeMovie] = useState({
@@ -18,6 +19,7 @@ export default function Home() {
   });
 
   const { topRated } = useContext(MoviesContext);
+
   const { randomIndex, handlePause } = useRandom(20, 30);
 
   useEffect(() => {
@@ -27,7 +29,6 @@ export default function Home() {
       setHomeMovie({ title, poster_path, backdrop_path, overview, id });
     }
   }, [randomIndex, topRated.length]);
-
   const { title, backdrop_path, id } = homeMovie;
   const { open, handleClose, handleOpen } = useModal();
 
@@ -49,6 +50,7 @@ export default function Home() {
                   handlePause={handlePause}
                   title={title}
                   id={id}
+                  type="movie"
                 />
                 {open ? (
                   <ModalInfo

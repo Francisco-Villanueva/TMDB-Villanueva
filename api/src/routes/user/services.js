@@ -1,6 +1,8 @@
 const { User } = require("../../models/User");
 const { Playlist } = require("../../models/Playlist");
-const { Favorites } = require("../../models/Favorites");
+const { FavoritesMovie } = require("../../models/FavoritesMovie");
+const { FavoritesTv } = require("../../models/FavoritesTv");
+
 const { Movies } = require("../../models/Movies");
 
 const getAllUsers = async (req, res) => {
@@ -12,7 +14,8 @@ const getAllUsers = async (req, res) => {
           as: "user_playlist",
           include: { model: Movies, as: "playlist_movie" },
         },
-        { model: Favorites, as: "user_favorite" },
+        { model: FavoritesMovie, as: "user_favorite_movie" },
+        { model: FavoritesTv, as: "user_favorite_tv" },
       ],
     });
 
@@ -33,7 +36,8 @@ const getUserById = async (req, res) => {
           as: "user_playlist",
           include: { model: Movies, as: "playlist_movie" },
         },
-        { model: Favorites, as: "user_favorite" },
+        { model: FavoritesMovie, as: "user_favorite_movie" },
+        { model: FavoritesTv, as: "user_favorite_tv" },
       ],
     });
 
@@ -42,14 +46,14 @@ const getUserById = async (req, res) => {
       return res.status(401).json({ error: "user not found" });
     }
 
-    console.log("user by ID: \n", user);
+    // console.log("user by ID: \n", user);
     res.status(200).json(user);
   } catch (error) {
     res.status(401).send(error);
   }
 };
 
-const addFavorite = async (req, res) => {
+const addFavoriteMovie = async (req, res) => {
   try {
     const { userId, movieId } = req.params;
 
@@ -61,7 +65,7 @@ const addFavorite = async (req, res) => {
       return res.status(404).json({ error: "User not found" });
     }
     // 3. Comprobar si el favorito ya existe en la lista de favoritos del usuario
-    const existingFavorite = await Favorites.findOne({
+    const existingFavorite = await FavoritesMovie.findOne({
       where: { UserId: userId, idMovie: movieId },
     });
 
@@ -70,10 +74,104 @@ const addFavorite = async (req, res) => {
     }
 
     // 4. Crear un nuevo registro en la tabla de favoritos
-    await Favorites.create({ UserId: userId, idMovie: movieId });
+    await FavoritesMovie.create({ UserId: userId, idMovie: movieId });
 
     // 5. Responder con un mensaje de éxito
     res.status(200).json({ message: "Movie added to favorites" });
+  } catch (error) {
+    res.status(401).send(error);
+  }
+};
+const deleteFavoriteMovie = async (req, res) => {
+  try {
+    const { userId, movieId } = req.params;
+
+    // 1. Obtener el usuario por su ID
+    const user = await User.findByPk(userId);
+
+    // 2. Comprobar si el usuario existe
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    // 3. Comprobar si el favorito ya existe en la lista de favoritos del usuario
+    const existingFavorite = await FavoritesMovie.findOne({
+      where: { UserId: userId, idMovie: movieId },
+    });
+
+    if (!existingFavorite) {
+      return res
+        .status(400)
+        .json({ error: "Movie dosen't exisist in favorites" });
+    }
+
+    // 4. Crear un nuevo registro en la tabla de favoritos
+    await FavoritesMovie.destroy({
+      where: { UserId: userId, idMovie: movieId },
+    });
+
+    // 5. Responder con un mensaje de éxito
+    res.status(200).json({ message: "Movie deleted favorites" });
+  } catch (error) {
+    console.log(error);
+    res.status(401).json(error);
+  }
+};
+const addFavoriteTv = async (req, res) => {
+  try {
+    const { userId, tvId } = req.params;
+
+    console.log(tvId);
+    // 1. Obtener el usuario por su ID
+    const user = await User.findByPk(userId);
+
+    // 2. Comprobar si el usuario existe
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    // 3. Comprobar si el favorito ya existe en la lista de favoritos del usuario
+    const existingFavorite = await FavoritesTv.findOne({
+      where: { UserId: userId, idTv: tvId },
+    });
+
+    if (existingFavorite) {
+      return res.status(400).json({ error: "Tv is already in favorites" });
+    }
+
+    // 4. Crear un nuevo registro en la tabla de favoritos
+    await FavoritesTv.create({ UserId: userId, idTv: tvId });
+
+    // 5. Responder con un mensaje de éxito
+    res.status(201).json({ message: "TV added to favorites" });
+  } catch (error) {
+    res.status(401).send(error);
+  }
+};
+const deleteFavoriteTv = async (req, res) => {
+  try {
+    const { userId, tvId } = req.params;
+    // 1. Obtener el usuario por su ID
+    const user = await User.findByPk(userId);
+
+    // 2. Comprobar si el usuario existe
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    // 3. Comprobar si el favorito ya existe en la lista de favoritos del usuario
+    const existingFavorite = await FavoritesTv.findOne({
+      where: { UserId: userId, idTv: tvId },
+    });
+
+    if (!existingFavorite) {
+      return res
+        .status(400)
+        .json({ error: "Tv does't exist at favorite list1" });
+    }
+
+    // 4. Crear un nuevo registro en la tabla de favoritos
+    await FavoritesTv.destroy({ where: { UserId: userId, idTv: tvId } });
+
+    res.status(201).json({ message: "TV deleted from favorites" });
   } catch (error) {
     res.status(401).send(error);
   }
@@ -173,8 +271,11 @@ const addToPlaylist = async (req, res) => {
 module.exports = {
   getAllUsers,
   getUserById,
-  addFavorite,
+  addFavoriteMovie,
+  addFavoriteTv,
   createPlaylist,
   addToPlaylist,
   getPlaylist,
+  deleteFavoriteTv,
+  deleteFavoriteMovie,
 };

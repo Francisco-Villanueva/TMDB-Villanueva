@@ -1,6 +1,7 @@
 const { User } = require("../../models/User");
 const { generateToken, validateToken } = require("../../config/tokens");
-const { Favorites } = require("../../models/Favorites");
+const { FavoritesMovie } = require("../../models/FavoritesMovie");
+const { FavoritesTv } = require("../../models/FavoritesTv");
 const { Playlist } = require("../../models/Playlist");
 
 const register = async (req, res) => {
@@ -36,7 +37,8 @@ const login = async (req, res) => {
       },
       include: [
         { model: Playlist, as: "user_playlist" },
-        { model: Favorites, as: "user_favorite" },
+        { model: FavoritesMovie, as: "user_favorite_movie" },
+        { model: FavoritesTv, as: "user_favorite_tv" },
       ],
     });
 

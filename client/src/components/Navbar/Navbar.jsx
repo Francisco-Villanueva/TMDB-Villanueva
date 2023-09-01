@@ -4,11 +4,15 @@ import SwitchTheme from "./SwitchTheme";
 import Search from "./Search/Search";
 import Popover from "@mui/material/Popover";
 import { UserContext } from "../../context/UserContext";
-export default function Navbar({ search, setSearch, moviesHook }) {
+import FavoriteBadge from "../../commons/FavoritesBadge";
+import { SearchContext } from "../../context/SearchContext";
+export default function Navbar() {
   // console.log(moviesHook);'
 
-  const { favorites, user, id_LS } = useContext(UserContext);
+  const { favorites, user, id_LS, favorites_movie, favorites_tv } =
+    useContext(UserContext);
 
+  const { setSearch } = useContext(SearchContext);
   const currentUser = {
     name: user.name,
     color: "#fff",
@@ -33,10 +37,14 @@ export default function Navbar({ search, setSearch, moviesHook }) {
     <nav id="navbar" className="navbar_main">
       <h3 onClick={handleBack}>TMDB </h3>
 
-      <Search search={search} setSearch={setSearch} moviesHook={moviesHook} />
+      <Search />
 
       <div className="navbar_profile">
         <SwitchTheme />
+        <FavoriteBadge
+          tvCount={favorites_tv.length}
+          movieCount={favorites_movie.length}
+        />
         <Profile user={currentUser} />
       </div>
     </nav>

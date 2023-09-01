@@ -23,7 +23,7 @@ export default function Home_List() {
 
       <hr style={{ width: "70vw" }} />
       <br />
-      <div>{randomTv ? <Big_item tv={randomTv} /> : "loading"}</div>
+      <div>{randomTv ? <Big_item tv={randomTv} type="tv" /> : "loading"}</div>
 
       <List list_name={"TV Popular"} movies_list={tv_popular} type="tv" />
       <List list_name={"TV On The Air"} movies_list={onTheAir} type="tv" />

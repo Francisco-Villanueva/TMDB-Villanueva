@@ -7,13 +7,19 @@ const {
   getUserById,
   createPlaylist,
   addToPlaylist,
-  addFavorite,
+  addFavoriteMovie,
+  addFavoriteTv,
   getPlaylist,
+  deleteFavoriteMovie,
+  deleteFavoriteTv,
 } = require("./services");
 
 router.get("/", getAllUsers);
 router.get("/:id", getUserById);
-router.post("/:userId/favorites/:movieId", addFavorite);
+router.post("/:userId/favorites/movies/:movieId", addFavoriteMovie);
+router.post("/:userId/favorites/tv/:tvId", addFavoriteTv);
+router.delete("/:userId/favorites/movies/:movieId", deleteFavoriteMovie);
+router.delete("/:userId/favorites/tv/:tvId", deleteFavoriteTv);
 router.post("/:userId/playlist", createPlaylist);
 router.get("/:userId/playlist", getPlaylist);
 router.post("/:userId/playlist/:playlist_id/:movieId", addToPlaylist);

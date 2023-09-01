@@ -1,0 +1,20 @@
+.playlist_container {
+  display: flex;
+  flex-direction: column;
+  // justify-content: space-around;
+  align-items: center;
+  gap: 1em;
+  margin: 10px 0;
+  // background-color: aliceblue;
+  min-height: 40vh;
+}
+.playlistCard_main {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: $main;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 2px 4px 4px #000;
+  width: 80%;
+}

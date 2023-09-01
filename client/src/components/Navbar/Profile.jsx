@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Popover from "@mui/material/Popover";
 import { Button } from "antd";
 import { UserContext } from "../../context/UserContext";
@@ -17,6 +17,7 @@ export default function Profile({ user }) {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const navTo = useNavigate();
 
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
@@ -49,8 +50,7 @@ export default function Profile({ user }) {
             }}
           >
             <Button onClick={logOut}>Log out</Button>
-            <Link to="/favorites">Favorites</Link>
-            <Button>Playlist</Button>
+            <Button onClick={() => navTo("/user")}>User</Button>
           </Popover>
         </>
       ) : (

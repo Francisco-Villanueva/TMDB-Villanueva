@@ -24,7 +24,7 @@ export default function Details({
       <Box sx={{ display: "flex", gap: "1em" }}>
         <Chip
           sx={{
-            width: "10%",
+            width: "20%",
             display: "flex",
             alignItems: "center",
           }}
@@ -34,7 +34,7 @@ export default function Details({
         />
         <Chip
           sx={{
-            width: "10%",
+            width: "20%",
             display: "flex",
             alignItems: "center",
           }}
