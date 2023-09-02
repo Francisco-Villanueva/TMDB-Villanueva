@@ -45,7 +45,7 @@ export default function Navbar() {
           tvCount={favorites_tv.length}
           movieCount={favorites_movie.length}
         />
-        <Profile user={currentUser} />
+        <Profile user={user} />
       </div>
     </nav>
   );

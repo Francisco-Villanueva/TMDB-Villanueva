@@ -4,6 +4,7 @@ const { FavoritesMovie } = require("../../models/FavoritesMovie");
 const { FavoritesTv } = require("../../models/FavoritesTv");
 
 const { Movies } = require("../../models/Movies");
+const { col } = require("sequelize");
 
 const getAllUsers = async (req, res) => {
   try {
@@ -52,7 +53,33 @@ const getUserById = async (req, res) => {
     res.status(401).send(error);
   }
 };
+const editUser = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const { email, password, name, color } = req.body;
 
+    const user = await User.findOne({
+      where: {
+        id: userId,
+      },
+    });
+
+    if (!user) {
+      return res.status(404).send("User not found!");
+    }
+
+    await user.update({
+      email,
+      password,
+      name,
+      color,
+    });
+
+    res.status(201).json({ user });
+  } catch (error) {
+    res.status(401).send(error);
+  }
+};
 const addFavoriteMovie = async (req, res) => {
   try {
     const { userId, movieId } = req.params;
@@ -208,7 +235,33 @@ const createPlaylist = async (req, res) => {
     res.status(401).send(error);
   }
 };
+const deletePlaylist = async (req, res) => {
+  try {
+    const { userId, playlist_id } = req.params;
+    const user = await User.findByPk(userId);
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
 
+    const playlist = await Playlist.findOne({
+      where: { UserId: userId, id: playlist_id },
+    });
+
+    if (!playlist) {
+      return res.status(404).json({ error: "Playlist not found" });
+    }
+
+    await Playlist.destroy({
+      where: {
+        id: playlist_id,
+      },
+    });
+
+    res.status(201).send("Playlist Deleted");
+  } catch (error) {
+    res.status(401).send(error);
+  }
+};
 const getPlaylist = async (req, res) => {
   try {
     const { userId } = req.params;
@@ -278,4 +331,6 @@ module.exports = {
   getPlaylist,
   deleteFavoriteTv,
   deleteFavoriteMovie,
+  editUser,
+  deletePlaylist,
 };

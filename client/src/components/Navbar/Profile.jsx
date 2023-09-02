@@ -28,9 +28,7 @@ export default function Profile({ user }) {
         <>
           <Chip
             avatar={
-              <Avatar
-              // sx={{ bgcolor: user.color }}
-              >
+              <Avatar sx={{ bgcolor: user.color }}>
                 {user.name.slice(0, 1).toUpperCase()}
               </Avatar>
             }

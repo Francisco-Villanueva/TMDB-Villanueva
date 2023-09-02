@@ -21,7 +21,7 @@ export default function UserProfile() {
     useContext(UserContext);
   // console.log(favorites_movie, favorites_tv);
 
-  console.log(user);
+  // console.log(user);
   const [playlist_name, setPlayListName] = useState("");
 
   const handleInputPlaylist = (e) => {
@@ -53,18 +53,32 @@ export default function UserProfile() {
           </Divider>
           <div className="userProfiler_favorites_section">
             <div className="favoriteList_container">
-              <List
-                list_name={" Movies"}
-                movies_list={favorites_movie}
-                type={"movie"}
-              />
+              {favorites_movie[0] ? (
+                <List
+                  list_name={" MOVIES"}
+                  movies_list={favorites_movie}
+                  type={"movie"}
+                />
+              ) : (
+                <>
+                  <h3>Movies</h3>
+                  <span>No favorites movies ...</span>
+                </>
+              )}
             </div>
             <div className="favoriteList_container">
-              <List
-                list_name={" Tv Series"}
-                movies_list={favorites_tv}
-                type={"tv"}
-              />
+              {favorites_tv[0] ? (
+                <List
+                  list_name={" TV- SERIES"}
+                  movies_list={favorites_tv}
+                  type={"tv"}
+                />
+              ) : (
+                <>
+                  <h3>TV - SERIES</h3>
+                  <span>No favorites tv series ...</span>
+                </>
+              )}
             </div>
           </div>
         </div>

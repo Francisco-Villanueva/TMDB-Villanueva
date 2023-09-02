@@ -173,6 +173,18 @@ export function UserProvider({ children }) {
       message.success(`Playlist ${playlist_name}, created succesfully !`);
     } catch (error) {}
   };
+  const deletePlaylist = async (userId, playlist_id) => {
+    try {
+      await axios.delete(
+        `http://localhost:4000/user/${userId}/playlist/${playlist_id}`
+      );
+      const user = await axios.get(`http://localhost:4000/user/${userId}`);
+      setUser(user.data);
+
+      message.warning(`Playlist ${playlist_name}, deleted succesfully !`);
+    } catch (error) {}
+  };
+
   return (
     <UserContext.Provider
       value={{
@@ -186,6 +198,7 @@ export function UserProvider({ children }) {
         deleteFavorites_tv,
         isFavorite,
         createPlaylist,
+        deletePlaylist,
       }}
     >
       {children}

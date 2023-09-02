@@ -11,6 +11,7 @@ import { TransitionGroup } from "react-transition-group";
 import { UserContext } from "../../../context/UserContext";
 import { Chip } from "@mui/material";
 import PlaylistCard from "./PlaylistCard";
+import { message } from "antd";
 
 const FRUITS = [
   "🍏 Apple",
@@ -41,8 +42,8 @@ function renderItem({ item, handleRemoveFruit }) {
 }
 
 export default function CardsContainer({}) {
-  const { createPlaylist, user } = useContext(UserContext);
-
+  const { createPlaylist, user, deletePlaylist } = useContext(UserContext);
+  const { user_playlist: playlists } = user;
   const [playlist_name, setPlayListName] = useState("");
 
   const handleInputPlaylist = (e) => {
@@ -50,12 +51,16 @@ export default function CardsContainer({}) {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    createPlaylist(user.id, playlist_name);
-    setPlayListName("");
+    if (playlist_name !== "") {
+      createPlaylist(user.id, playlist_name);
+      setPlayListName("");
+    } else {
+      message.warning("Please enter a name for playlist!", 2);
+    }
   };
 
-  const handleRemoveFruit = (item) => {
-    setFruitsInBasket((prev) => [...prev.filter((i) => i !== item)]);
+  const handleDeletePlaylist = (idPlaylist) => {
+    deletePlaylist(user.id, idPlaylist);
   };
 
   return (
@@ -71,11 +76,20 @@ export default function CardsContainer({}) {
         <button className="newPlaylis_btn"> + </button>
       </form>
       <TransitionGroup>
-        {user.user_playlist.map((item) => (
-          <Collapse key={item.id}>
-            <PlaylistCard playlist={item} />
-          </Collapse>
-        ))}
+        {playlists[0] ? (
+          playlists.map((item) => (
+            <Collapse key={item.id}>
+              <PlaylistCard
+                playlist={item}
+                handleRemove={handleDeletePlaylist}
+              />
+            </Collapse>
+          ))
+        ) : (
+          <>
+            <span>No playlists ...</span>
+          </>
+        )}
       </TransitionGroup>
     </div>
   );

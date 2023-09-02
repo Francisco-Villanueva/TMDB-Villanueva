@@ -13,7 +13,7 @@ import React from "react";
 export default function UserCard({ user }) {
   return (
     <div className="userCard_container">
-      <Avatar sx={{ width: 156, height: 156 }}>
+      <Avatar sx={{ width: 156, height: 156, bgcolor: user.color }}>
         {user.name.slice(0, 1).toUpperCase()}
       </Avatar>
 
