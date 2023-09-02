@@ -8,6 +8,7 @@ import Loading from "../../commons/Loading";
 import { Box } from "@mui/material";
 import { MoviesContext } from "../../context/MoviesContext";
 import { UserContext } from "../../context/UserContext";
+import Modal_AddPlaylist from "../../commons/Modal_AddPlaylist";
 
 export default function Home() {
   const [homeMovie, setHomeMovie] = useState({
@@ -31,6 +32,11 @@ export default function Home() {
   }, [randomIndex, topRated.length]);
   const { title, backdrop_path, id } = homeMovie;
   const { open, handleClose, handleOpen } = useModal();
+  const {
+    open: openPlaylist,
+    handleClose: handleClosePlaylist,
+    handleOpen: handleOpenPlaylist,
+  } = useModal();
 
   return (
     <section className="home_section">
@@ -48,6 +54,7 @@ export default function Home() {
                   size={40}
                   showInfo={handleOpen}
                   handlePause={handlePause}
+                  showAddPlaylist={handleOpenPlaylist}
                   title={title}
                   id={id}
                   type="movie"
@@ -59,6 +66,18 @@ export default function Home() {
                     handlePause={handlePause}
                     id={id}
                     type="movie"
+                  />
+                ) : (
+                  ""
+                )}
+
+                {openPlaylist ? (
+                  <Modal_AddPlaylist
+                    {...{
+                      openPlaylist,
+                      handleClosePlaylist,
+                      handleOpenPlaylist,
+                    }}
                   />
                 ) : (
                   ""

@@ -39,56 +39,59 @@ export default function UserProfile() {
           <FontAwesomeIcon icon={faArrowLeft} />
         </Link>
       </button>
-      <br />
-      {/* 
-      <Divider>
-        <h3>Profile</h3>
-      </Divider> */}
-      <UserCard user={user} />
+      {/* <br /> */}
 
-      <div className="playlists_favorites_section">
-        <div className="child1">
-          <Divider sx={{ width: "10%" }}>
-            <h3>Favorites</h3>
-          </Divider>
-          <div className="userProfiler_favorites_section">
-            <div className="favoriteList_container">
-              {favorites_movie[0] ? (
-                <List
-                  list_name={" MOVIES"}
-                  movies_list={favorites_movie}
-                  type={"movie"}
-                />
-              ) : (
-                <>
-                  <h3>Movies</h3>
-                  <span>No favorites movies ...</span>
-                </>
-              )}
+      {user.name ? (
+        <>
+          <UserCard user={user} />
+
+          <div className="playlists_favorites_section">
+            <div className="child1">
+              <Divider>
+                <h1 style={{ fontSize: "25px" }}>Favorites</h1>
+              </Divider>
+              <div className="userProfiler_favorites_section">
+                <div className="favoriteList_container">
+                  {favorites_movie[0] ? (
+                    <List
+                      list_name={" MOVIES"}
+                      movies_list={favorites_movie}
+                      type={"movie"}
+                    />
+                  ) : (
+                    <>
+                      <h3>Movies</h3>
+                      <span>No favorites movies ...</span>
+                    </>
+                  )}
+                </div>
+                <div className="favoriteList_container">
+                  {favorites_tv[0] ? (
+                    <List
+                      list_name={" TV- SERIES"}
+                      movies_list={favorites_tv}
+                      type={"tv"}
+                    />
+                  ) : (
+                    <>
+                      <h3>TV - SERIES</h3>
+                      <span>No favorites tv series ...</span>
+                    </>
+                  )}
+                </div>
+              </div>
             </div>
-            <div className="favoriteList_container">
-              {favorites_tv[0] ? (
-                <List
-                  list_name={" TV- SERIES"}
-                  movies_list={favorites_tv}
-                  type={"tv"}
-                />
-              ) : (
-                <>
-                  <h3>TV - SERIES</h3>
-                  <span>No favorites tv series ...</span>
-                </>
-              )}
+            <div className="child2">
+              <Divider>
+                <h1 style={{ fontSize: "25px" }}>Playlists</h1>
+              </Divider>
+              <CardsContainer playlist={user.user_playlist} />
             </div>
           </div>
-        </div>
-        <div className="child2">
-          <Divider>
-            <h3>Playlist</h3>
-          </Divider>
-          <CardsContainer playlist={user.user_playlist} />
-        </div>
-      </div>
+        </>
+      ) : (
+        ""
+      )}
     </div>
   );
 }

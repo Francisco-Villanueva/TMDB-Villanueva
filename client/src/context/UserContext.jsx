@@ -6,6 +6,7 @@ const initialState = {
   favorites_tv: [],
   favorites_movie: [],
   playlists: [],
+  logged: false,
   id_LS: localStorage.getItem("userId") ? localStorage.getItem("userId") : "",
 };
 
@@ -18,10 +19,11 @@ export function UserProvider({ children }) {
     favorites_movie: [],
     playlists: [],
     id_LS: localStorage.getItem("userId"),
+    logged: false,
   });
 
   function setUser(user) {
-    setState((state) => ({ ...state, user: user }));
+    setState((state) => ({ ...state, user: user, logged: true }));
     setFavorites(user.user_favorite_movie, user.user_favorite_tv);
 
     // console.log("User setteado", user);
@@ -29,7 +31,7 @@ export function UserProvider({ children }) {
 
   const logOut = () => {
     localStorage.clear();
-    setState((s) => ({ ...s, id_LS: null, user: {} }));
+    setState((s) => ({ ...s, id_LS: null, user: {}, logged: false }));
   };
 
   const addToFavorites_movie = async (userId, movieId, title) => {
@@ -182,9 +184,21 @@ export function UserProvider({ children }) {
       setUser(user.data);
 
       message.warning(`Playlist ${playlist_name}, deleted succesfully !`);
-    } catch (error) {}
+    } catch (error) {
+      console.log({ error });
+    }
   };
 
+  const editUser = async (userId, payload) => {
+    try {
+      await axios.put(`http://localhost:4000/user/${userId}`, payload);
+      const user = await axios.get(`http://localhost:4000/user/${userId}`);
+      setUser(user.data);
+      message.success("User edited successfully !");
+    } catch (error) {
+      console.log({ error });
+    }
+  };
   return (
     <UserContext.Provider
       value={{
@@ -199,6 +213,7 @@ export function UserProvider({ children }) {
         isFavorite,
         createPlaylist,
         deletePlaylist,
+        editUser,
       }}
     >
       {children}

@@ -17,7 +17,7 @@ export default function PlaylistCard({ playlist, handleRemove }) {
       </div>
 
       <span>
-        <b> {playlist_movie.length} </b> | movies
+        <b> {playlist_movie?.length} </b> | movies
       </span>
 
       <DeleteIcon

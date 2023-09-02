@@ -4,6 +4,8 @@ import Fab from "@mui/material/Fab";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import DeleteIcon from "@mui/icons-material/Delete";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
+import OptionsIcon from "@mui/icons-material/AddToPhotosOutlined";
+
 import { message } from "antd";
 import { UserContext } from "../context/UserContext";
 
@@ -12,6 +14,7 @@ export default function MoreInfo({
   font,
   showInfo,
   handlePause,
+  showAddPlaylist,
   title,
   onlyFav = false,
   id,
@@ -58,23 +61,45 @@ export default function MoreInfo({
 
       {user.name ? (
         !isFavorite(id, type) ? (
-          <Fab
-            onClick={handelFavorites}
-            aria-label="like"
-            color="info"
-            sx={{ width: size, height: size, minHeight: "1px", p: 2 }}
-          >
-            <FavoriteIcon sx={{ fontSize: font || 20 }} />
-          </Fab>
+          <>
+            <Fab
+              onClick={handelFavorites}
+              aria-label="like"
+              color="info"
+              sx={{ width: size, height: size, minHeight: "1px", p: 2 }}
+            >
+              <FavoriteIcon sx={{ fontSize: font || 20 }} />
+            </Fab>
+            <Fab
+              // onClick={handleClick}
+              disabled={true}
+              color="warning"
+              aria-label="add"
+              sx={{ width: size, height: size, minHeight: "1px", p: 2 }}
+            >
+              <OptionsIcon sx={{ fontSize: font || 20 }} />
+            </Fab>
+          </>
         ) : (
-          <Fab
-            onClick={handelFavorites}
-            aria-label="like"
-            color="default"
-            sx={{ width: size, height: size, minHeight: "1px", p: 2 }}
-          >
-            <DeleteIcon sx={{ fontSize: font || 20 }} />
-          </Fab>
+          <>
+            <Fab
+              onClick={handelFavorites}
+              aria-label="like"
+              color="default"
+              sx={{ width: size, height: size, minHeight: "1px", p: 2 }}
+            >
+              <DeleteIcon sx={{ fontSize: font || 20 }} />
+            </Fab>
+            <Fab
+              onClick={handleClick}
+              disabled={true}
+              color="primary"
+              aria-label="add"
+              sx={{ width: size, height: size, minHeight: "1px", p: 2 }}
+            >
+              <OptionsIcon sx={{ fontSize: font || 20 }} />
+            </Fab>
+          </>
         )
       ) : (
         ""

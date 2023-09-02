@@ -41,11 +41,11 @@ export default function Navbar() {
 
       <div className="navbar_profile">
         <SwitchTheme />
+        <Profile user={user} />
         <FavoriteBadge
           tvCount={favorites_tv.length}
           movieCount={favorites_movie.length}
         />
-        <Profile user={user} />
       </div>
     </nav>
   );

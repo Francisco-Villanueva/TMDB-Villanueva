@@ -1,17 +1,22 @@
 .userProfile_main {
+  position: absolute;
+  left: 0;
+  width: 100%;
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 30px;
-  // background-color: #0000008d;
+  background-color: $main;
   min-height: 100vh;
+  padding-top: 30px;
 }
 .btn_back {
   position: absolute;
+  left: 0;
+  top: 10px;
   background-color: #fff;
   color: $main;
   border: none;
-  padding: 0;
-  // margin: 5px;
   border-radius: 0 1em 1em 0;
   height: 30px;
   width: 30px;
@@ -20,12 +25,12 @@
   cursor: pointer;
 }
 .btn_back:hover {
-  // transform: scale(1.2);
-  background-color: #888888;
+  transform: scale(1.1);
+  width: 40px;
 }
 .userCard_container {
-  background-color: $main;
-  box-shadow: 1px 1px 4px #000;
+  // background-color: $main;
+  // box-shadow: 1px 1px 4px #000;
   display: flex;
   align-items: center;
   justify-content: space-around;
@@ -70,25 +75,27 @@
 .playlists_favorites_section {
   display: flex;
   justify-content: center;
-  gap: 20px;
+  width: 90%;
+  // outline: 3px dashed rgba(254, 0, 0, 0.642);
+  // gap: 10%;
 }
 .child1 {
   // outline: 1px solid #fff;
-  // background-color: #c5bf64;
-  // width: 70%;
+  max-width: 70%;
   flex: 2;
 }
 .child2 {
-  // background-color: #50b145;
+  // outline: 1px solid #fff;
+
   flex: 1;
 }
 .userProfiler_playlist_section {
-  outline: 2px solid rgba($main, 0.25);
-  border-radius: 10px;
-  max-width: 80%;
-  margin: auto;
-  padding: 0 20px;
-  height: 90vh;
+  // outline: 2px solid rgba($main, 1);
+  // // border-radius: 10px;
+  // max-width: 80%;
+  // // margin: auto;
+  // padding: 0 20px;
+  // height: 90vh;
 }
 
 .userProfiler_favorites_section {
@@ -97,16 +104,20 @@
   align-items: center;
   gap: 10px;
   max-width: 100%;
-  margin: 0;
+  margin: 0 auto;
 }
 
 .favoriteList_container {
-  // background-color: rgba($main, 0.1);
-  width: 90%;
-  // outline: 2px solid rgba($main, 0.25);
-  outline: 1px solid #ffffff1d;
+  background-color: #ededed;
+  color: $main;
+  min-height: 30vh;
+  width: 100%;
+  max-width: 90%;
   padding: 0 20px;
-  // box-shadow: -1px -2px 2px #000000dc;
+  display: flex;
+  gap: 1em;
+  align-items: center;
+  overflow-x: auto;
   border-radius: 10px;
 }
 

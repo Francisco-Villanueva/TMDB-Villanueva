@@ -14,10 +14,9 @@ import Loading from "./commons/Loading";
 import { TvContext } from "./context/TvContext";
 import UserProfile from "./components/UserProfile/UserProfile";
 import { SearchContext } from "./context/SearchContext";
-
+import ReactPlayer from "react-player";
+import Welcome from "./components/Welcome.jsx/Welcome";
 function App() {
-  // const { search, error, setSearch } = useSearch();
-  // const moviesHook = useMovies({ search });
   const { user, id_LS, setUser } = useContext(UserContext);
   const { setMoviesData, movies: moviesData } = useContext(MoviesContext);
   const { setTvData, tv } = useContext(TvContext);
@@ -27,7 +26,6 @@ function App() {
     setTvData();
     if (id_LS && !user.name) {
       axios.get(`http://localhost:4000/user/${id_LS}`).then(({ data }) => {
-        // console.log("ENTRO CUANDO HAY ID, PERO NO USER DATA, METO: \n", data);
         setUser(data);
       });
     }
@@ -36,6 +34,7 @@ function App() {
   return (
     <div className="app ">
       {/* <UserPopOver /> */}
+
       <Routes>
         <Route path="/login" element={<Landing />} />
         <Route path="/register" element={<Landing />} />
@@ -43,7 +42,7 @@ function App() {
         <Route
           path="/"
           element={
-            <>
+            <div>
               <Navbar />
               <>
                 {!Object.keys(moviesData).length ? (
@@ -59,7 +58,7 @@ function App() {
                   </>
                 )}
               </>
-            </>
+            </div>
           }
         />
         <Route path="/user" element={<UserProfile />} />
