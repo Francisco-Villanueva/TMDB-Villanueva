@@ -12,11 +12,7 @@ export default function Navbar() {
   const { favorites, user, id_LS, favorites_movie, favorites_tv } =
     useContext(UserContext);
 
-  const { setSearch } = useContext(SearchContext);
-  const currentUser = {
-    name: user.name,
-    color: "#fff",
-  };
+  const { setSearch, setLoading } = useContext(SearchContext);
   // Función para cambiar el estilo del navbar al hacer scroll
   function handleScroll() {
     const navbar = document.getElementById("navbar");
@@ -32,6 +28,7 @@ export default function Navbar() {
 
   const handleBack = () => {
     setSearch("");
+    setLoading(false);
   };
   return (
     <nav id="navbar" className="navbar_main">

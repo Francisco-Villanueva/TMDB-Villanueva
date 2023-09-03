@@ -30,7 +30,7 @@ export default function CardsContainer({}) {
   const handleDeletePlaylist = (idPlaylist) => {
     deletePlaylist(user.id, idPlaylist);
   };
-
+  console.log(playlists.length);
   return (
     <div className="playlist_container">
       <form className="form_newPlaylist" onSubmit={handleSubmit}>
@@ -43,22 +43,20 @@ export default function CardsContainer({}) {
         />
         <button className="newPlaylis_btn"> + </button>
       </form>
-      <TransitionGroup>
-        {playlists && playlists[0] ? (
-          playlists.map((item) => (
+      {playlists.length > 0 ? (
+        <TransitionGroup>
+          {playlists.map((item) => (
             <Collapse key={item.id}>
               <PlaylistCard
                 playlist={item}
                 handleRemove={handleDeletePlaylist}
               />
             </Collapse>
-          ))
-        ) : (
-          <>
-            <span>No playlists ...</span>
-          </>
-        )}
-      </TransitionGroup>
+          ))}
+        </TransitionGroup>
+      ) : (
+        <span>{"No playlists  ..."}</span>
+      )}
     </div>
   );
 }

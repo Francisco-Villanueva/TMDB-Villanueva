@@ -6,7 +6,9 @@ import { SearchContext } from "../../context/SearchContext";
 
 export default function Searched({ busqueda, movies_list }) {
   const { loading } = useContext(SearchContext);
-  console.log({ loading });
+  // console.log(movies_list);
+  const { movies, tv } = movies_list;
+
   return (
     <Box
       sx={{
@@ -16,14 +18,14 @@ export default function Searched({ busqueda, movies_list }) {
     >
       <br />
 
-      {loading ? (
+      {loading && movies.length ? (
         <>
           <List
-            list_name={`Movies:  ${busqueda}  | ${movies_list?.movies?.length} results`}
+            list_name={`Movies:  ${busqueda}  | ${movies?.length} results`}
             movies_list={movies_list?.movies}
           />
           <List
-            list_name={`Tv:  ${busqueda}  | ${movies_list?.tv?.length} results`}
+            list_name={`Tv:  ${busqueda}  | ${tv?.length} results`}
             movies_list={movies_list?.tv}
           />
         </>

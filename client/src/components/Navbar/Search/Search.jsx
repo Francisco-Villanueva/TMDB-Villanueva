@@ -7,12 +7,13 @@ import debounce from "just-debounce-it";
 import { SearchContext } from "../../../context/SearchContext";
 
 export default function Search({}) {
-  const { getMovies, search, setSearch } = useContext(SearchContext);
+  const { getMovies, search, setSearch, setLoading } =
+    useContext(SearchContext);
   const [sort, setSort] = useState(false);
   const debouncedGetMovies = useCallback(
     debounce((search) => {
       getMovies({ search });
-    }, 300),
+    }, 200),
     []
   );
 

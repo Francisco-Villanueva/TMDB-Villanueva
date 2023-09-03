@@ -13,7 +13,25 @@ import {
   GridActionsCellItem,
   GridRowEditStopReasons,
 } from "@mui/x-data-grid";
+import {
+  randomCreatedDate,
+  randomTraderName,
+  randomId,
+  randomArrayItem,
+} from "@mui/x-data-grid-generator";
 import { UserContext } from "../../../context/UserContext";
+const colors = [
+  "#fffb54",
+  "#145f7e",
+  "#7c412a",
+  "#132406",
+  "#1b2b50",
+  "#a09f94",
+];
+
+const ColorsOption = (color) => {
+  return <div style={{ background: color }}>{color}</div>;
+};
 
 export default function EditTable() {
   const { user, editUser } = React.useContext(UserContext);
@@ -81,18 +99,18 @@ export default function EditTable() {
 
     { field: "name", headerName: "Name", width: 150, editable: true },
     {
-      field: "color",
-      headerName: "Color",
-      width: 100,
-      align: "left",
-      headerAlign: "left",
-      editable: true,
-    },
-    {
       field: "email",
       headerName: "Email",
       width: 300,
       editable: true,
+    },
+    {
+      field: "color",
+      headerName: "Color",
+      type: "singleSelect",
+      editable: "true",
+      width: 100,
+      valueOptions: colors,
     },
     {
       field: "actions",
